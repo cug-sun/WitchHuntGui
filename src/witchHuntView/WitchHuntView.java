@@ -57,7 +57,7 @@ public class WitchHuntView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(300, 100, 750, 500);
+		frame.setBounds(300, 50, 1200, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(menuBar);	
 		menuBar.add(mnNewMenu);

@@ -2,19 +2,26 @@ package witchHuntView;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import RumourCards.RumourCard;
 import WitchHunt.Player;
+
 
 
 public class GamePane extends JPanel {
@@ -50,6 +57,9 @@ public class GamePane extends JPanel {
                 }
 			}
 		});
+		
+		JLabel jLabel = new JLabel("12345");
+		this.add(jLabel);
 	}
 	
 	@Override
@@ -63,8 +73,8 @@ public class GamePane extends JPanel {
          mapCards.clear();
          ArrayList<RumourCard> hand = playerList.get(0).getHand();
          int cardHeight = (getHeight() - 20) / 3;
-         int cardWidth = (int) (cardHeight * 0.6);
-         int xDelta = cardWidth;
+         int cardWidth = (int) (cardHeight * 0.7);
+         int xDelta = cardWidth+5;
          int xPos = (int) ((getWidth() / 2) - (cardWidth * (hand.size() / 4.0)));
          int yPos = (getHeight() - 20) - cardHeight;
          for (RumourCard card : hand) {
@@ -86,6 +96,20 @@ public class GamePane extends JPanel {
                  g2d.fill(bounds);
                  g2d.setColor(Color.BLACK);
                  g2d.draw(bounds);
+                 //
+                 Image image = null;
+                 try {
+         			image = ImageIO.read(new File("./AngryMolo.png"));
+         		} catch (IOException e) {
+         			// TODO 自动生成的 catch 块
+         			e.printStackTrace();
+         		}
+         		image = image.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
+                 g2d.drawImage(image, bounds.x, bounds.y, null);
+                 //
+                 g2d.setFont(new Font("Bradley Hand ITC", Font.BOLD, 16));
+                 g2d.drawString("Witch Hunt", 50,50);
+                 //
                  Graphics2D copy = (Graphics2D) g2d.create();
                  paintCard(copy, card, bounds);
                  copy.dispose();
@@ -97,9 +121,12 @@ public class GamePane extends JPanel {
      protected void paintCard(Graphics2D g2d, RumourCard card, Rectangle bounds) {
          g2d.translate(bounds.x + 5, bounds.y + 5);
          g2d.setClip(0, 0, bounds.width - 5, bounds.height - 5);
-
+         
          String text = card.getCardName().toString();
          FontMetrics fm = g2d.getFontMetrics();
          g2d.drawString(text, 0, fm.getAscent());
+         
+         //
+		
      }
 }
