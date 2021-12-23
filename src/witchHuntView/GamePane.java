@@ -99,7 +99,7 @@ public class GamePane extends JPanel {
                  //
                  Image image = null;
                  try {
-         			image = ImageIO.read(new File("./AngryMolo.png"));
+         			image = ImageIO.read(new File("./image/card/AngryMolo.png"));
          		} catch (IOException e) {
          			// TODO 自动生成的 catch 块
          			e.printStackTrace();
