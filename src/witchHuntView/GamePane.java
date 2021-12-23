@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class GamePane extends JPanel {
 	public GamePane(ArrayList<Player> playerList) {
 		// TODO 自动生成的构造函数存根
 		this.playerList = playerList;
-		mapCards = new HashMap<>(playerList.size() * 5);
+		mapCards = new HashMap<>(playerList.size() * 2);
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -83,7 +84,7 @@ public class GamePane extends JPanel {
              xPos += xDelta;
          }
      }
-	 
+	 @Override
 	 protected void paintComponent(Graphics g) {
          super.paintComponent(g);
          Graphics2D g2d = (Graphics2D) g.create();
@@ -96,20 +97,6 @@ public class GamePane extends JPanel {
                  g2d.fill(bounds);
                  g2d.setColor(Color.BLACK);
                  g2d.draw(bounds);
-                 //
-                 Image image = null;
-                 try {
-         			image = ImageIO.read(new File("./image/card/AngryMolo.png"));
-         		} catch (IOException e) {
-         			// TODO 自动生成的 catch 块
-         			e.printStackTrace();
-         		}
-         		image = image.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
-                 g2d.drawImage(image, bounds.x, bounds.y, null);
-                 //
-                 g2d.setFont(new Font("Bradley Hand ITC", Font.BOLD, 16));
-                 g2d.drawString("Witch Hunt", 50,50);
-                 //
                  Graphics2D copy = (Graphics2D) g2d.create();
                  paintCard(copy, card, bounds);
                  copy.dispose();
@@ -119,14 +106,25 @@ public class GamePane extends JPanel {
      }
 
      protected void paintCard(Graphics2D g2d, RumourCard card, Rectangle bounds) {
-         g2d.translate(bounds.x + 5, bounds.y + 5);
-         g2d.setClip(0, 0, bounds.width - 5, bounds.height - 5);
+         //Translates the origin of the graphics context to the point (x, y) in the current coordinate system
+//    	 g2d.translate(bounds.x + 5, bounds.y + 5);
+//         g2d.setClip(0, 0, bounds.width - 5, bounds.height - 5);
+//         
+//         String text = card.getCardName().toString();
+//         FontMetrics fm = g2d.getFontMetrics();
+//         g2d.drawString(text, 0, fm.getAscent());
          
-         String text = card.getCardName().toString();
-         FontMetrics fm = g2d.getFontMetrics();
-         g2d.drawString(text, 0, fm.getAscent());
+         //draw card image
+         Image image = card.getCardImage();
+         BufferedImage buffered = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+         Graphics2D g = buffered.createGraphics();
+         g.drawImage(image, 0, 0, null);
          
-         //
-		
+         Image scaledImage = image.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
+         g2d.drawImage(scaledImage, bounds.x, bounds.y, null);
+       
+//         g2d.setFont(new Font("Bradley Hand ITC", Font.BOLD, 16));
+//         g2d.drawString("Witch Hunt", 50,50);
+//         g2d.drawImage(image,getWidth()/2,getHeight()/2,null);
      }
 }

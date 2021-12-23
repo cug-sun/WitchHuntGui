@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import RumourCards.AngryMob;
 import RumourCards.BlackCat;
 import RumourCards.EvilEye;
 import RumourCards.HookedNose;
@@ -99,11 +100,11 @@ public class WitchHuntView {
 			ArrayList<Player> playerList = new ArrayList<Player>();
 			Player player = new Player(1);
 			playerList.add(player);
-			RumourCard blackCat = new BlackCat();
+			RumourCard AngryMob = new AngryMob();
 			RumourCard evilEye = new EvilEye();
 			RumourCard hookedNose = new HookedNose();
 			RumourCard petNewt = new PetNewt();
-			player.addHand(blackCat);
+			player.addHand(AngryMob);
 			player.addHand(evilEye);
 			player.addHand(hookedNose);
 			player.addHand(petNewt);
