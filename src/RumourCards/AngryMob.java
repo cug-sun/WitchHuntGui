@@ -2,8 +2,7 @@ package RumourCards;
 
 import java.util.Scanner;
 
-
-
+import WitchHunt.Bot;
 import WitchHunt.Game;
 import WitchHunt.Identity;
 import WitchHunt.Player;
@@ -75,6 +74,39 @@ public class AngryMob extends RumourCard {
 		else {
 			System.out.println(this.getCardName() + " is only playable if you have been revealed as a villager");
 			setIsUsed(false);
+		}
+	}
+	
+	@Override
+	public void robotWitchEffect(Game game) {
+		// TODO 自动生成的方法存根
+		System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+		game.setCurrentPlayer(game.getCurrentPlayer());
+		setIsUsed(true);
+	}
+
+	@Override
+	public void robotHuntEffect(Game game) {
+		// TODO 自动生成的方法存根
+		Bot player = (Bot) game.getCurrentPlayer();
+		if(player.isRevealed() == true && player.getIdentity() == Identity.Villager) {
+			Player chosenPlayer = null;
+			do {
+				chosenPlayer = player.randomChoose(game);
+			} while (chosenPlayer.isRevealed() == false);
+			chosenPlayer.revealIdentity();
+			if (chosenPlayer.existRevealedCard(RumourCardName.Broomstick) == false) {
+				if(chosenPlayer.getIdentity() == Identity.Witch) {
+					System.out.printf("Player %d gains 2 points, he/she plays next turn\n",player.getPlayerId());
+					game.setCurrentPlayer(player);
+				}
+				else {
+					System.out.printf("Player %d loses 2 points, player %d plays next turn\n",chosenPlayer.getPlayerId());
+					game.setCurrentPlayer(chosenPlayer);
+				}
+				setIsUsed(true);
+			}
+			
 		}
 	}
 }

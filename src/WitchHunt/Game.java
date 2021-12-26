@@ -110,8 +110,13 @@ public class Game {
 		playerList = new ArrayList<Player>();
 		outPlayerList = new ArrayList<Player>();
 		for(int i = 1; i <= nPlayer; i++) {
-			Player newPlayer = new Player(i);
-			playerList.add(newPlayer);		
+			if(i == 1) {
+				Player newPlayer = new Player(i);
+				playerList.add(newPlayer);
+				continue;
+			}
+			Player newPlayer = new Bot(i);
+			playerList.add(newPlayer);
 		}
 		chooseIdentity();
 		//Randomly select start player
@@ -215,6 +220,45 @@ public class Game {
 		this.currentPlayer = player;
 	}
 	
+	public void playBot() {
+		initPile();
+		distribute();
+		while(true) {
+			currentPlayer.playTurn(this);
+			outOfGame();
+			if (isRoundEnd()) {
+				playerList.addAll(outPlayerList);
+				outPlayerList.clear();
+				if(isGameEnd()) {
+					break;
+				}
+				else {
+					//reset
+					
+					Collections.sort(playerList, new Comparator<Player>() {
+						public int compare(Player p1, Player p2) {
+						    return Integer.compare(p1.getPlayerId(), p2.getPlayerId());
+						};
+					});	
+					//score board
+					scoreBoard();
+					System.out.println("\nStart new round...\n");
+					chooseIdentity();
+					System.out.printf("Start from player %d, who was last to reveal his/her identity in the previous round\n",currentPlayer.getPlayerId());
+					for (Player player : playerList) {
+						player.getHand().clear();
+						player.getRevealedCards().clear();
+						player.setEvilEye(0);
+						player.setIsRevealed(false);
+					}
+					initPile();
+					distribute();
+				}
+				
+			}
+		} 
+	}
+	
 	public void playGame() {
 		initPile();
 		distribute();
@@ -254,6 +298,12 @@ public class Game {
 		} 
 		
 		
+	}
+	
+	public void playRound() {
+		initPile();
+		distribute();
+		currentPlayer.playTurn(this);
 	}
 	
 	public void playTurn() {
@@ -314,7 +364,7 @@ public class Game {
 			accuse[0] = currentPlayer.getPlayerId();
 			accuse[1] = accusedPlayer.getPlayerId();
 			//the accused player acts
-			accusedPlayer.beingAccuesd(this);
+			accusedPlayer.beAccused(this);
 			//setCurrentPlayer(accusedPlayer);
 			}
 		}
@@ -345,7 +395,7 @@ public class Game {
 				accuse[0] = currentPlayer.getPlayerId();
 				accuse[1] = accusedPlayer.getPlayerId();
 				//the accused player acts
-				accusedPlayer.beingAccuesd(this);
+				accusedPlayer.beAccused(this);
 				//setCurrentPlayer(accusedPlayer);
 				}
 				break;

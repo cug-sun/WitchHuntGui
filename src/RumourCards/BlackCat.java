@@ -2,6 +2,7 @@ package RumourCards;
 
 import java.util.Scanner;
 
+import WitchHunt.Bot;
 import WitchHunt.Game;
 import WitchHunt.Player;
 
@@ -58,6 +59,26 @@ public class BlackCat extends RumourCard {
 		}
 
 
+	}
+
+	@Override
+	public void robotWitchEffect(Game game) {
+		// TODO 自动生成的方法存根
+		System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+		game.setCurrentPlayer(game.getCurrentPlayer());
+		setIsUsed(true);
+	}
+
+	@Override
+	public void robotHuntEffect(Game game) {
+		// TODO 自动生成的方法存根
+		Bot player = (Bot) game.getCurrentPlayer();
+		if(!game.discardPile.isEmpty()) {
+			//randomly choose a card from discard pile
+			int index = (int) (Math.random() * game.discardPile.size());
+			RumourCard chosenCard = game.discardPile.get(index);
+			System.out.printf(null, null);
+		}
 	}
 
 }

@@ -42,4 +42,16 @@ public class EvilEye extends RumourCard {
 		setIsUsed(true);
 	}
 
+	@Override
+	public void robotWitchEffect(Game game) {
+		// TODO 自动生成的方法存根
+		
+	}
+
+	@Override
+	public void robotHuntEffect(Game game) {
+		// TODO 自动生成的方法存根
+		
+	}
+
 }

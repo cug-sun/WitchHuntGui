@@ -37,4 +37,16 @@ public class Wart extends RumourCard {
 
 	}
 
+	@Override
+	public void robotWitchEffect(Game game) {
+		// TODO 自动生成的方法存根
+		
+	}
+
+	@Override
+	public void robotHuntEffect(Game game) {
+		// TODO 自动生成的方法存根
+		
+	}
+
 }
