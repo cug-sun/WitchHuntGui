@@ -64,17 +64,24 @@ public class Bot extends Player {
 		Player accusePlayer = game.findPlayer(game.getAccuse()[0]);
 		Player accusedPlayer = game.findPlayer(game.getAccuse()[1]);
 		//situation 1: reveal identity
-		this.revealIdentity();
-		if (this.getIdentity() == Identity.Villager) {
-			System.out.printf("Player %d gains no point, player %d will play next turn\n",accusePlayer.getPlayerId(),this.getPlayerId());
-			accusePlayer.updatePoints(0);
-			game.setCurrentPlayer(accusedPlayer);
+		if (this.getIdentity() == Identity.Witch) {
+			//use Witch? effect
 		}
 		else {
-			System.out.printf("Player %d gains 1 point, player %d will play next turn\n", accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
-			accusePlayer.updatePoints(1);
-			game.setCurrentPlayer(accusePlayer);
+			System.out.printf("Player %d chooses to reveal identity card\n", this.getPlayerId());
+			this.revealIdentity();
+			if (this.getIdentity() == Identity.Villager) {
+				System.out.printf("Player %d gains no point, player %d will play next turn\n",accusePlayer.getPlayerId(),this.getPlayerId());
+				accusePlayer.updatePoints(0);
+				game.setCurrentPlayer(accusedPlayer);
+			}
+			else {
+				System.out.printf("Player %d gains 1 point, player %d will play next turn\n", accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
+				accusePlayer.updatePoints(1);
+				game.setCurrentPlayer(accusePlayer);
+			}
 		}
+		
 	}
 	
 	
