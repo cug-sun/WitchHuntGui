@@ -22,6 +22,7 @@ import witchHuntView.GamePane;
 public class WitchHuntController {
 	
 	private Game model;
+	private GamePane gamePane;
 	
 	public WitchHuntController(JFrame frame,JMenuItem item) {
 		// TODO 自动生成的构造函数存根
@@ -48,13 +49,15 @@ public class WitchHuntController {
 				player1.addHand(hookedNose);
 				player1.addHand(petNewt);
 				//
-				GamePane gamePane = new GamePane(playerList);
+				gamePane = new GamePane(playerList);
 				frame.getContentPane().add(gamePane);
 				frame.validate();
 			}
 		});
 	}
-	public void paintCards() {
+	
+	
+	public void initialGame() {
 		
 	}
 	public void setIdentity(Player player) {
@@ -66,11 +69,14 @@ public class WitchHuntController {
 		else {
 			player.setIdentity(Identity.Witch);
 		}
+		
 	}
 	public void setPlayers() {
 		Integer[] choice = {3,4,5,6};
 		int nPlayer = (int)JOptionPane.showInputDialog(null,"Number of players", "Initialize",JOptionPane.INFORMATION_MESSAGE, null,choice, choice[0]);
 		String mes = "Each player has " + 12/nPlayer + " rumour cards";
 		JOptionPane.showMessageDialog(null, mes);
+		model.setnPlayer(nPlayer);
+		model.initPlayer();
 	}
 }

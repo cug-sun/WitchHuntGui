@@ -12,6 +12,21 @@ public class Bot extends Player {
 		// TODO 自动生成的构造函数存根
 		
 	}
+	
+	@Override
+	//randomly choose identity
+	public void chooseIdentity() {
+		double seed = Math.random();
+		if (seed < 0.5) {
+			this.setIdentity(Identity.Witch);
+			System.out.printf("Player %d chooses to be a Witch\n", this.getPlayerId());
+		}
+		else {
+			this.setIdentity(Identity.Villager);
+			System.out.printf("Player %d chooses to be a Villager\n", this.getPlayerId());
+		}
+	}
+	
 	@Override
 	public void chooseNextPlayer(Game game) {
 		Player chosenPlayer = null;

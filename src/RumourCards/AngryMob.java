@@ -93,7 +93,7 @@ public class AngryMob extends RumourCard {
 			Player chosenPlayer = null;
 			do {
 				chosenPlayer = player.randomChoose(game);
-			} while (chosenPlayer.isRevealed() == false);
+			} while (chosenPlayer.isRevealed() == true);
 			chosenPlayer.revealIdentity();
 			if (chosenPlayer.existRevealedCard(RumourCardName.Broomstick) == false) {
 				if(chosenPlayer.getIdentity() == Identity.Witch) {

@@ -151,55 +151,19 @@ public class Game {
 	
 	public void chooseIdentity() {
 		for (Player player : playerList) {
-			System.out.printf("Player %d chooses to be a 1.Villager 2.Witch\n",player.getPlayerId());
-			Scanner scanner = new Scanner(System.in);
-			while (true) {
-				try {
-					int identity = scanner.nextInt();
-					if (identity < 1 || identity > 2) {
-						System.out.println("Invalide input! Input again");
-						scanner = new Scanner(System.in);
-					}
-					else {
-						switch (identity) {
-						case 1: {
-							player.setIdentity(Identity.Villager);
-							break;
-						}
-						case 2: {
-							player.setIdentity(Identity.Witch);
-							break;
-						}
-//						default:
-//							throw new IllegalArgumentException("Unexpected value: " + scanner);
-						}
-						break;
-					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					System.out.println("Invalide input! Input again");
-					scanner = new Scanner(System.in);
-				}
-				
-				
-			}
-			
-			}
-//			switch (identity) {
-//			case 1: {
-//				player.setIdentity(Identity.Villager);
-//				break;
-//			}
-//			case 2: {
-//				player.setIdentity(Identity.Witch);
-//				break;
-//			}
-//			default:
-//				throw new IllegalArgumentException("Unexpected value: " + scanner);
-//			}
+			player.chooseIdentity();
 		}
+	}
 	
 	
+	public int getnPlayer() {
+		return nPlayer;
+	}
+
+	public void setnPlayer(int nPlayer) {
+		this.nPlayer = nPlayer;
+	}
+
 	public ArrayList<Player> getPlayerList(){
 		return this.playerList;
 	}

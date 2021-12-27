@@ -50,6 +50,9 @@ public class Player {
 	public Identity getIdentity() {
 		return this.identity;
 	}
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
 	
 	
 	public ArrayList<RumourCard> getRevealedCards(){
@@ -136,10 +139,39 @@ public class Player {
 		return this.hand;
 	}
 		
-	//Accuse another player of being a Witch
-	public void accuse() {
-
+	public void chooseIdentity() {
+		System.out.printf("Player %d chooses to be a 1.Villager 2.Witch\n",this.getPlayerId());
+		Scanner scanner = new Scanner(System.in);
+		while (true) {
+			try {
+				int identity = scanner.nextInt();
+				if (identity < 1 || identity > 2) {
+					System.out.println("Invalide input! Input again");
+					scanner = new Scanner(System.in);
+				}
+				else {
+					switch (identity) {
+					case 1: {
+						this.setIdentity(Identity.Villager);
+						break;
+					}
+					case 2: {
+						this.setIdentity(Identity.Witch);
+						break;
+					}
+				}
+					break;
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Invalide input! Input again");
+				scanner = new Scanner(System.in);
+			}
+			
+			
+		}
 	}
+	
 	//when a player is accused to be a witch
 	public void beAccused(Game game) {
 		game.displayStatus();
@@ -203,9 +235,7 @@ public class Player {
 		}
 		
 	}
-	public void setIdentity(Identity identity) {
-		this.identity = identity;
-	}
+	
 	
 	public boolean haveBroomstick() {
 		boolean broomstick = false;
