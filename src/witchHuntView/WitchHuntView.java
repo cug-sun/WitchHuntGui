@@ -8,10 +8,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-
+import WitchHunt.Game;
 import witchHuntController.WitchHuntController;
 
 import javax.swing.JMenu;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.Frame;
 
 
 
@@ -21,7 +26,7 @@ public class WitchHuntView {
 	private JFrame frame;
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu mnNewMenu = new JMenu("Game");
-	private JMenuItem start = new JMenuItem("New game");
+	private JMenuItem startConfig = new JMenuItem("New game");
 
 	/**
 	 * Launch the application.
@@ -30,9 +35,11 @@ public class WitchHuntView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Game game = new Game();
 					WitchHuntView window = new WitchHuntView();
+					WitchHuntController controller = new WitchHuntController(game, window);
 					
-					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,60 +53,33 @@ public class WitchHuntView {
 	public WitchHuntView() {
 		
 		initialize();
-		WitchHuntController controller = new WitchHuntController(frame,start);
+		
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(300, 50, 1200, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame = new JFrame("Witch Hunt");
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setJMenuBar(menuBar);	
 		menuBar.add(mnNewMenu);
 
 		
-//		start.addActionListener(new JMenuItemHanlder());
-		mnNewMenu.add(start);
+		mnNewMenu.add(startConfig);
+		frame.setVisible(true);
+		
 	}
-	
-	
-	
-	
-	
-	
-//	class JMenuItemHanlder implements ActionListener{
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			// TODO 自动生成的方法存根
-//			Integer[] choice = {3,4,5,6};
-//			int nPlayer = (int)JOptionPane.showInputDialog(null,"Number of players", "Initialize",JOptionPane.INFORMATION_MESSAGE, null,choice, choice[0]);
-//			String mes = "Each player has " + 12/nPlayer + " rumour cards";
-//			JOptionPane.showMessageDialog(null, mes);
-//			
-//			//test code
-//			ArrayList<Player> playerList = new ArrayList<Player>();
-//			Player player = new Player(1);
-//			playerList.add(player);
-//			RumourCard AngryMob = new AngryMob();
-//			RumourCard evilEye = new EvilEye();
-//			RumourCard hookedNose = new HookedNose();
-//			RumourCard petNewt = new PetNewt();
-//			player.addHand(AngryMob);
-//			player.addHand(evilEye);
-//			player.addHand(hookedNose);
-//			player.addHand(petNewt);
-//			//
-//			GamePane gamePane = new GamePane(playerList);
-//			frame.getContentPane().add(gamePane);
-//			frame.validate();
-//			
-//			
-//		}
-//		
-//	}
+
+	public JMenuItem getStartConfig() {
+		return startConfig;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
 
 }

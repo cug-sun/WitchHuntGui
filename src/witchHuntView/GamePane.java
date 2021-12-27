@@ -23,11 +23,14 @@ import javax.swing.JPanel;
 
 
 import RumourCards.RumourCard;
+import WitchHunt.Game;
 import WitchHunt.Player;
 
 
 
 public class GamePane extends JPanel {
+	private Game game;
+	
 	private ArrayList<Player> playerList;
 	
 	private HashMap<RumourCard, Rectangle> mapCards;
@@ -36,9 +39,9 @@ public class GamePane extends JPanel {
 	
 	private RumourCard selected;
 	
-	public GamePane(ArrayList<Player> playerList) {
+	public GamePane(Game game) {
 		// TODO 自动生成的构造函数存根
-		this.playerList = playerList;
+		this.playerList = game.getPlayerList();
 		mapCards = new HashMap<>(playerList.get(0).getHand().size()*2);
 		mapPlayers = new HashMap<>(playerList.size() * 2);
 		
