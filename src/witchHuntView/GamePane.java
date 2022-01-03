@@ -29,7 +29,7 @@ import WitchHunt.Player;
 
 
 public class GamePane extends JPanel {
-	private Game game;
+	private Game model;
 	
 	private ArrayList<Player> playerList;
 	
@@ -39,9 +39,12 @@ public class GamePane extends JPanel {
 	
 	private RumourCard selected;
 	
-	public GamePane(Game game) {
+	private JLabel infoLabel;
+	
+	public GamePane(Game model) {
 		// TODO 自动生成的构造函数存根
-		this.playerList = game.getPlayerList();
+		this.model = model;
+		this.playerList = model.getPlayerList();
 		mapCards = new HashMap<>(playerList.get(0).getHand().size()*2);
 		mapPlayers = new HashMap<>(playerList.size() * 2);
 		
@@ -67,7 +70,8 @@ public class GamePane extends JPanel {
                 }
 			}
 		});
-		
+		infoLabel = new JLabel();
+		this.add(infoLabel, getWidth()/2, getHeight()/2);
 		
 	}
 	
@@ -94,12 +98,12 @@ public class GamePane extends JPanel {
          }
          
         
-         int playerAreaHeight = getHeight()/4;
+         int playerAreaHeight = getHeight()/5;
          int playerAreaWidth = (int) (playerAreaHeight * 0.7);
          
          int playerXPos = getWidth()/2 - playerAreaWidth * ((playerList.size() + 1) / 2);
          for(int i = 1 ; i < playerList.size() ; i++) {
-        	 Rectangle playerArea = new Rectangle(playerXPos, 0, playerAreaWidth, playerAreaHeight);
+        	 Rectangle playerArea = new Rectangle(playerXPos, 10, playerAreaWidth, playerAreaHeight);
         	 mapPlayers.put(playerList.get(i), playerArea);
         	 playerXPos += playerAreaWidth + 70;
          }
@@ -111,11 +115,11 @@ public class GamePane extends JPanel {
          ArrayList<RumourCard> hand = playerList.get(0).getHand();;
          for (RumourCard card : hand) {
              Rectangle bounds = mapCards.get(card);
-             System.out.println(bounds);
+//             System.out.println(bounds);
              if (bounds != null) {
+//                 g2d.setColor(Color.WHITE);
+//                 g2d.fill(bounds);
                  g2d.setColor(Color.WHITE);
-                 g2d.fill(bounds);
-                 g2d.setColor(Color.BLACK);
                  g2d.draw(bounds);
                  Graphics2D copy = (Graphics2D) g2d.create();
                  paintCard(copy, card, bounds);
@@ -125,18 +129,20 @@ public class GamePane extends JPanel {
          
          
          for(Player player : playerList) {
-        	 Rectangle bounds = mapPlayers.get(player);
-        	 if(bounds != null) {
+        	 Rectangle playerBounds = mapPlayers.get(player);
+        	 if(playerBounds != null) {
         		 g2d.setColor(Color.WHITE);
-        		 g2d.fill(bounds);
-        		 g2d.setColor(Color.BLACK);
-        		 g2d.draw(bounds);
+        		 g2d.fill(playerBounds);
+        		 g2d.setColor(Color.WHITE);
+        		 g2d.draw(playerBounds);
         		 Graphics2D copy = (Graphics2D) g2d.create();
-        		 paintPlayer(copy, player, bounds);
+        		 paintPlayer(copy, player, playerBounds);
         		 copy.dispose();
+        		 
         		 
         	 }
          }
+//         paintAccuse(g2d);
          g2d.dispose();
      }
 
@@ -165,12 +171,24 @@ public class GamePane extends JPanel {
      protected void paintPlayer(Graphics2D g2d, Player player, Rectangle bounds) {
     	 Image identity = null;
   		try {
-  			identity = ImageIO.read(new File("./image/identity/unknown.png"));
+  			identity = ImageIO.read(new File("./image/identity/unknown1.png"));
   		} catch (IOException e) {
   			// TODO 自动生成的 catch 块
   			e.printStackTrace();
   		}
-  		Image scaledImage = identity.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
-  		g2d.drawImage(scaledImage, bounds.x, bounds.y, null);
+//  		Image scaledImage = identity.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
+  		g2d.drawImage(identity, bounds.x, bounds.y, null);
+     }
+     
+     public void paintAccuse(Graphics2D g2d) {
+		Player accusePlayer = model.findPlayer(model.getAccuse()[0]);
+		Player accusedPlayer = model.findPlayer(model.getAccuse()[1]);
+		Rectangle dialog = new Rectangle((int)mapPlayers.get(accusePlayer).getX(), (int)mapPlayers.get(accusePlayer).getY(), 50, 20);
+		g2d.drawString("123456", (int)mapPlayers.get(accusePlayer).getX(), (int)mapPlayers.get(accusePlayer).getY());
+		
+	}
+     
+     public JLabel getInfoLabel() {
+    	 return infoLabel;
      }
 }

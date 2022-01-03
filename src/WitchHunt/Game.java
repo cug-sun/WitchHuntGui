@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 
-
+import javax.swing.JOptionPane;
 
 import RumourCards.AngryMob;
 import RumourCards.BlackCat;
@@ -42,31 +42,32 @@ public class Game {
 	public Game() {
 		System.out.println("*****************Witch Hunt*****************");
 		System.out.println("Choose the number of players (3-6)");
-		Scanner scanner = new Scanner(System.in);
-		//set the number of players
-		while (true) {
-			try {
-				nPlayer = scanner.nextInt();
-				if (nPlayer > 6 || nPlayer < 3 ) {
-					System.out.println("Invalide input! Input again");
-					scanner = new Scanner(System.in);
-				}
-				else {
-					break;
-				}
-			}
-			catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("Invalide input! Input again");
-				scanner = new Scanner(System.in);
-			}
-		}
-		
-		
-		
-		System.out.println(this.nPlayer + " players");
-		System.out.println("Each player will have " + Game.nHumourCards/this.nPlayer + " Rumour Cards" );
-		initPlayer();
+//		Scanner scanner = new Scanner(System.in);
+//		//set the number of players
+//		while (true) {
+//			try {
+//				nPlayer = scanner.nextInt();
+//				if (nPlayer > 6 || nPlayer < 3 ) {
+//					System.out.println("Invalide input! Input again");
+//					scanner = new Scanner(System.in);
+//				}
+//				else {
+//					break;
+//				}
+//			}
+//			catch (Exception e) {
+//				// TODO: handle exception
+//				System.out.println("Invalide input! Input again");
+//				scanner = new Scanner(System.in);
+//			}
+//		}	
+//		System.out.println(this.nPlayer + " players");
+//		System.out.println("Each player will have " + Game.nHumourCards/this.nPlayer + " Rumour Cards" );
+//		initPlayer();
+		setPlayers();
+		setIdentity();
+		initPile();
+		distribute();
 	}
 	
 	public void shuffleCard() {
@@ -151,6 +152,9 @@ public class Game {
 	
 	public void chooseIdentity() {
 		for (Player player : playerList) {
+			if ((player instanceof Bot) == false) {
+				continue;
+			}
 			player.chooseIdentity();
 		}
 	}
@@ -172,6 +176,10 @@ public class Game {
 		return this.currentPlayer;
 	}
 	
+	public void setCurrentPlayer(Player player) {
+		this.currentPlayer = player;
+	}
+	
 	public int[] getAccuse() {
 		return this.accuse;
 	}
@@ -180,9 +188,7 @@ public class Game {
 		return this.discardPile;
 	}
 	
-	public void setCurrentPlayer(Player player) {
-		this.currentPlayer = player;
-	}
+	
 	
 	public void playBot() {
 		initPile();
@@ -555,6 +561,26 @@ public class Game {
 			}
 		}
 		System.out.print("\n\n");
+	}
+	
+	public void setIdentity() {
+		String[] options = {"Witch","Villager"};
+		String identity = (String)JOptionPane.showInputDialog(null,"You choose to be", "Identity",JOptionPane.INFORMATION_MESSAGE, null,options,options[0] );
+		if(identity == "Villager") {
+			this.getPlayerList().get(0).setIdentity(Identity.Villager);
+		}
+		else {
+			this.getPlayerList().get(0).setIdentity(Identity.Witch);
+		}
+		
+	}
+	public void setPlayers() {
+		Integer[] options = {3,4,5,6};
+		int nPlayer = (int)JOptionPane.showInputDialog(null,"Number of players", "Initialize",JOptionPane.INFORMATION_MESSAGE, null,options, options[0]);
+		String mes = "Each player has " + 12/nPlayer + " rumour cards";
+		JOptionPane.showMessageDialog(null, mes);
+		this.setnPlayer(nPlayer);
+		this.initPlayer();
 	}
 	
 	
