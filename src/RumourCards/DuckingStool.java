@@ -1,10 +1,12 @@
 package RumourCards;
 
-import java.util.Scanner;
-import WitchHunt.Game;
-import WitchHunt.Identity;
-import WitchHunt.Player;
+import Model.Bot;
 
+import java.util.Scanner;
+
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
 
 public class DuckingStool extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Ducking_Stool;

@@ -1,4 +1,4 @@
-package RumourCards;
+package Model.CardModel;
 
 import Controller.Game;
 

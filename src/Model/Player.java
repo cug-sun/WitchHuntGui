@@ -1,14 +1,19 @@
-package WitchHunt;
+package Model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import RumourCards.RumourCard;
-import RumourCards.RumourCardName;
+import javax.swing.JLabel;
+
+import Controller.Game;
+import RumourCards.*;
+//import RumourCards.RumourCard;
+//import RumourCards.RumourCardName;
 
 
 
 public class Player {
 	private int playerId;
+	
 	protected ArrayList<RumourCard> hand;
 	//Identity
 	private Identity identity;
@@ -21,6 +26,8 @@ public class Player {
 	//if this player is chosen by Evil Eye, id of the player who uses Evil eye
 	private int evilEye;
 	
+	public JLabel messageLabel;
+	
 	public Player(int playerId) {
 		this.playerId = playerId;
 		this.points = 0;
@@ -28,6 +35,7 @@ public class Player {
 		this.hand = new ArrayList<RumourCard>();
 		this.revealedCards = new ArrayList<RumourCard>();
 		this.evilEye = 0;
+		this.messageLabel = new JLabel(Integer.toString(points));
 	}
 	//get field isIdReavealed
 	public boolean isRevealed() {
@@ -57,6 +65,10 @@ public class Player {
 	
 	public ArrayList<RumourCard> getRevealedCards(){
 		return this.revealedCards;
+	}
+	
+	public void setMessageLabel(String message) {
+		messageLabel.setText(message);
 	}
 	
 	public void addHand(RumourCard card) {

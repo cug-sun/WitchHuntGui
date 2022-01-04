@@ -1,7 +1,8 @@
-package WitchHunt;
+package Model;
 
 import java.util.ArrayList;
 
+import Controller.Game;
 import RumourCards.RumourCard;
 
 

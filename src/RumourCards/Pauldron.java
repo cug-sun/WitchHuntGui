@@ -1,9 +1,10 @@
 package RumourCards;
 
 
-import WitchHunt.Game;
-import WitchHunt.Player;
-import WitchHunt.Identity;
+import Model.Bot;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
 
 public class Pauldron extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Pauldron;

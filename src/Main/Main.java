@@ -2,10 +2,7 @@ package Main;
 
 import java.awt.EventQueue;
 
-import WitchHunt.Game;
-import witchHuntController.WitchHuntController;
-import witchHuntView.ConfigFrame;
-import witchHuntView.WitchHuntView;
+
 
 public class Main {
 

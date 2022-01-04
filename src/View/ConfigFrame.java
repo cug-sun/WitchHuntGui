@@ -1,4 +1,4 @@
-package witchHuntView;
+package View;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;

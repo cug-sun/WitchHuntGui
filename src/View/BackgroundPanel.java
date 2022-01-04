@@ -1,4 +1,4 @@
-package witchHuntView;
+package View;
 
 
 

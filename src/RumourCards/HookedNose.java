@@ -2,8 +2,10 @@ package RumourCards;
 
 import java.util.Scanner;
 
-import WitchHunt.Game;
-import WitchHunt.Player;
+import Model.Bot;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
 
 public class HookedNose extends RumourCard {
 

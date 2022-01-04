@@ -1,11 +1,9 @@
-package witchHuntView;
+package View;
 
 import javax.swing.JPanel;
 
-
-
-import WitchHunt.Game;
-import WitchHunt.Identity;
+import Controller.Game;
+import Model.Identity;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -20,7 +18,7 @@ public class ConfigPane extends JPanel {
 
 	private JButton startButton;
 	private JButton exitButton;
-	private Game model;
+	private Game game;
 	
 	/**
 	 * Create the panel.
@@ -71,10 +69,10 @@ public class ConfigPane extends JPanel {
 		String[] options = {"Witch","Villager"};
 		String identity = (String)JOptionPane.showInputDialog(null,"You choose to be", "Identity",JOptionPane.INFORMATION_MESSAGE, null,options,options[0] );
 		if(identity == "Viilager") {
-			model.getPlayerList().get(0).setIdentity(Identity.Villager);
+			game.getPlayerList().get(0).setIdentity(Identity.Villager);
 		}
 		else {
-			model.getPlayerList().get(0).setIdentity(Identity.Witch);
+			game.getPlayerList().get(0).setIdentity(Identity.Witch);
 		}
 		
 	}
@@ -83,8 +81,8 @@ public class ConfigPane extends JPanel {
 		int nPlayer = (int)JOptionPane.showInputDialog(null,"Number of players", "Initialize",JOptionPane.INFORMATION_MESSAGE, null,options, options[0]);
 		String mes = "Each player has " + 12/nPlayer + " rumour cards";
 		JOptionPane.showMessageDialog(null, mes);
-		model.setnPlayer(nPlayer);
-		model.initPlayer();
+		game.setnPlayer(nPlayer);
+		game.initPlayer();
 	}
 
 }

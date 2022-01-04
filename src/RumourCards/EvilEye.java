@@ -1,7 +1,10 @@
 package RumourCards;
 
-import WitchHunt.Game;
-import WitchHunt.Player;
+import Model.Bot;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
+
 
 public class EvilEye extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Evil_Eye;

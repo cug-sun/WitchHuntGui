@@ -2,10 +2,10 @@ package RumourCards;
 
 import java.util.Scanner;
 
-import WitchHunt.Bot;
-import WitchHunt.Game;
-import WitchHunt.Identity;
-import WitchHunt.Player;
+import Model.Bot;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
 
 public class AngryMob extends RumourCard {
 	

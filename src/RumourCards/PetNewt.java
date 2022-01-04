@@ -1,11 +1,15 @@
 package RumourCards;
 
+import Model.Bot;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import WitchHunt.Game;
-import WitchHunt.Player;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
+
 
 public class PetNewt extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Pet_Newt;

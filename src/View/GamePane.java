@@ -1,4 +1,4 @@
-package witchHuntView;
+package View;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -15,16 +17,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 
 import RumourCards.RumourCard;
-import WitchHunt.Game;
-import WitchHunt.Player;
+import Controller.Game;
+import Model.Player;
 
 
 
@@ -41,10 +46,15 @@ public class GamePane extends JPanel {
 	
 	private JLabel infoLabel;
 	
-	public GamePane(Game model) {
+	private JButton accuseButton;
+	
+	private JButton useCardButton;
+	
+	public GamePane(Game game) {
 		// TODO 自动生成的构造函数存根
-		this.model = model;
-		this.playerList = model.getPlayerList();
+		
+		this.model = game;
+		this.playerList = game.getPlayerList();
 		mapCards = new HashMap<>(playerList.get(0).getHand().size()*2);
 		mapPlayers = new HashMap<>(playerList.size() * 2);
 		
@@ -71,7 +81,31 @@ public class GamePane extends JPanel {
 			}
 		});
 		infoLabel = new JLabel();
-		this.add(infoLabel, getWidth()/2, getHeight()/2);
+		this.add(infoLabel);
+		System.out.println(getWidth()+getHeight());
+		accuseButton = new JButton("accuse");
+		accuseButton.setLocation(500, 700);
+		useCardButton = new JButton("use card");
+		this.add(accuseButton);
+		accuseButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				
+				if (game.getCurrentPlayer() == game.getPlayerList().get(0)) {
+					ArrayList<Integer> accusable = new ArrayList<Integer>();
+					for(Player player: game.getPlayerList()) {
+						if (player.isRevealed() == false) {
+							accusable.add(player.getPlayerId());
+						}
+					}
+					Object[] options = accusable.toArray();
+					JOptionPane.showInputDialog(null, "You choose player", "Accuse", JOptionPane.INFORMATION_MESSAGE,null , options, options[0]);
+				}
+				
+			}
+		});
 		
 	}
 	
@@ -178,6 +212,8 @@ public class GamePane extends JPanel {
   		}
 //  		Image scaledImage = identity.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
   		g2d.drawImage(identity, bounds.x, bounds.y, null);
+  		player.messageLabel.setBounds(bounds.x, bounds.y + identity.getHeight(null), 100, 50);
+  		this.add(player.messageLabel);
      }
      
      public void paintAccuse(Graphics2D g2d) {

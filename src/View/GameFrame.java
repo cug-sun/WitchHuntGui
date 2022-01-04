@@ -1,10 +1,10 @@
-package witchHuntView;
+package View;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import WitchHunt.Game;
+import Controller.Game;
 
 public class GameFrame extends JFrame {
 

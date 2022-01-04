@@ -1,8 +1,9 @@
 package RumourCards;
 
-import WitchHunt.Game;
-import WitchHunt.Identity;
-import WitchHunt.Player;
+import Model.Bot;
+import Controller.Game;
+import Model.Identity;
+import Model.Player;
 
 public class Toad extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Toad;
