@@ -42,6 +42,8 @@ public class Player {
 	
 	public JLabel identityLabel;
 	
+	public JLabel scoreLabel;
+	
 	public Player(int playerId) {
 		loadImage();
 		
@@ -52,8 +54,11 @@ public class Player {
 		this.revealedCards = new ArrayList<RumourCard>();
 		this.evilEye = 0;
 		
-		this.messageLabel = new JLabel(Integer.toString(points));
+		this.messageLabel = new JLabel(String.format("Player %d", playerId));
+		
 		this.identityLabel = new JLabel(new ImageIcon(unknownImage));
+		
+		this.scoreLabel = new JLabel(Integer.toString(points));
 	}
 	
 	public void loadImage() {
@@ -114,13 +119,26 @@ public class Player {
 		if(this.isIdRevealed == false) {
 			this.isIdRevealed = true;
 			System.out.println("Player "+ this.playerId + "'s identity card is revealed, he/she is a "+ this.identity);
-			identityLabel.setIcon(new ImageIcon(witchImage));
+			if(this.identity == Identity.Villager) {
+				identityLabel.setIcon(new ImageIcon(villagerImage));
+			}
+			else if (this.identity == Identity.Witch) {
+				identityLabel.setIcon(new ImageIcon(witchImage));
+			} 
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 			return true;
+			
 		}
 		else {
 			System.out.println("Player "+ this.playerId + " has been revealed as a " + this.identity);
 			return false;
 		}
+		
 	}
 	
 	public void chooseNextPlayer(Game game) {
@@ -171,6 +189,7 @@ public class Player {
 	//update player's points in the game
 	public void updatePoints(int points) {
 		this.points += points;
+		scoreLabel.setText(Integer.toString(points));
 	}
 	
 	public int getPoint() {
@@ -229,7 +248,7 @@ public class Player {
 			System.out.println("You have these cards:");
 			this.displayHand();
 			String[] actions = {"reveal","use Witch?"};
-			int choice = JOptionPane.showOptionDialog(null, "choose one", "your turn",1, 3, null, actions, actions[0]);
+			int choice = JOptionPane.showOptionDialog(null, "You choose to", String.format("You are accused by player %d", accusePlayer.getPlayerId()),1, 3, null, actions, actions[0]);
 			switch (choice) {
 			case 0: {
 				
@@ -440,8 +459,8 @@ public class Player {
 //				System.out.println("Invalide input! Input again");
 //			}
 //		}
-		String[] actions = {"accuse","use card"};
-		int choice = JOptionPane.showOptionDialog(null, "choose one", "your turn",1, 3, null, actions, actions[0]);
+		String[] actions = {"accuse","use Hunt!"};
+		int choice = JOptionPane.showOptionDialog(null, "You choose to", "It's your turn",1, 3, null, actions, actions[0]);
 		
 		switch (choice) {
 		case 0: {
@@ -454,7 +473,7 @@ public class Player {
 				}
 			}
 			Object[] options = idList.toArray();
-			int chosenId = (int) JOptionPane.showInputDialog(null, "player", "you choose", 1, null, options, options[0]);
+			int chosenId = (int) JOptionPane.showInputDialog(null, "player", "You accuse", 1, null, options, options[0]);
 			System.out.printf("You accuse player %d of being a witch\n", chosenId);
 			Player chosenPlayer = game.findPlayer(chosenId);
 			game.getAccuse()[0] = game.getCurrentPlayer().getPlayerId();
@@ -463,7 +482,27 @@ public class Player {
 			break;
 		}
 		case 1:{
+			ArrayList<String> cardList = new ArrayList<String>();
+			for (RumourCard card: hand) {
+				cardList.add(card.getCardName().toString());
+			}
+			Object[] options = cardList.toArray();
+			int chosenIndex = (int) JOptionPane.showInputDialog(null, "You choose", "You have these cards", 1, null, options, options[0]);
+			RumourCard chosenCard = hand.get(chosenIndex);
+			System.out.printf("You choose to use %s\n",chosenCard.getCardName().toString());
+			chosenCard.huntEffect(game);
+			if (chosenCard.getIsUsed() == true) {
+			this.getHand().remove(chosenCard);
+			//after using Black Cat, discard it
+			if (chosenCard.getCardName() == RumourCardName.Black_Cat) {
+				game.discardPile.add(chosenCard);
+			}
+			else {
+				this.getRevealedCards().add(chosenCard);
+			}
+			
 			break;
+			}
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + choice);

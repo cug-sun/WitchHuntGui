@@ -13,23 +13,12 @@ import RumourCards.RumourCard;
 
 public class Bot extends Player {
 
-	private Image witchImage;
 	
-	private Image villagerImage;
-	
-	private Image unknownImage;
 	
 	public Bot(int playerId) {
 		super(playerId);
 		// TODO 自动生成的构造函数存根
-		try {
-			witchImage = ImageIO.read(new File("./image/identity/witch.png"));
-			villagerImage = ImageIO.read(new File("./image/identity/villager.png"));
-			unknownImage = ImageIO.read(new File("./image/identity/unknown.png"));
-		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
+		
 	}
 	
 	@Override
@@ -83,6 +72,7 @@ public class Bot extends Player {
 			game.getAccuse()[0] = this.getPlayerId();
 			game.getAccuse()[1] = accusedPlayer.getPlayerId();
 			System.out.printf("Player %d accuses player %d of being a witch\n", this.getPlayerId(), accusedPlayer.getPlayerId());
+			messageLabel.setText(String.format("accuse player %d", accusedPlayer.getPlayerId()));
 			game.getAccuse()[0] = this.getPlayerId();
 			game.getAccuse()[1] = accusedPlayer.getPlayerId();
 			accusedPlayer.beAccused(game);

@@ -220,11 +220,10 @@ public class Game {
 	}
 
 	public void playBot() {
-		initPile();
-		distribute();
+		
 		while(true) {
 			currentPlayer.playTurn(this);
-			gamePane.repaint();
+//			gamePane.repaint();
 			hangOn();
 			
 			
@@ -246,6 +245,7 @@ public class Game {
 					//score board
 					scoreBoard();
 					System.out.println("\nStart new round...\n");
+					gamePane.setInfoLabel("Start new round...");
 					chooseIdentity();
 					System.out.printf("Start from player %d, who was last to reveal his/her identity in the previous round\n",currentPlayer.getPlayerId());
 					for (Player player : playerList) {

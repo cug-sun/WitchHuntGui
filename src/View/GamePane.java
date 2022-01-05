@@ -89,7 +89,7 @@ public class GamePane extends JPanel {
 		this.setLayout(null);
 		startButton = new JButton("start");
 		infoLabel = new JLabel();
-		startButton.setBounds(700, 300, 100, 30);
+		startButton.setBounds(100, 700, 100, 30);
 		infoLabel.setBounds(700, 300, 200, 30);
 		
 		this.add(startButton);
@@ -138,16 +138,18 @@ public class GamePane extends JPanel {
              xPos += xDelta;
          }
          
-        
-         int playerAreaHeight = getHeight()/5;
-         int playerAreaWidth = (int) (playerAreaHeight * 0.7);
+        if(game.getnPlayer() == game.getPlayerList().size()) {
+        	int playerAreaHeight = getHeight()/5;
+            int playerAreaWidth = (int) (playerAreaHeight * 0.7);
+            
+            int playerXPos = getWidth()/2 - playerAreaWidth * ((playerList.size() + 1) / 2);
+            for(int i = 1 ; i < playerList.size() ; i++) {
+           	 Rectangle playerArea = new Rectangle(playerXPos, 10, playerAreaWidth, playerAreaHeight);
+           	 mapPlayers.put(playerList.get(i), playerArea);
+           	 playerXPos += playerAreaWidth + 70;
+            }
+        }
          
-         int playerXPos = getWidth()/2 - playerAreaWidth * ((playerList.size() + 1) / 2);
-         for(int i = 1 ; i < playerList.size() ; i++) {
-        	 Rectangle playerArea = new Rectangle(playerXPos, 10, playerAreaWidth, playerAreaHeight);
-        	 mapPlayers.put(playerList.get(i), playerArea);
-        	 playerXPos += playerAreaWidth + 70;
-         }
      }
 	 @Override
 	 protected void paintComponent(Graphics g) {
@@ -223,44 +225,23 @@ public class GamePane extends JPanel {
 		}
     	 
 
-    	 player.identityLabel.setBounds(bounds);
-//    	 if (player.isRevealed() == false) {
-//    		 player.identityLabel.setIcon(new ImageIcon(unknownImage));
-////    		 player.identityLabel.setText("unknown");
-//		}
-//    	 else if (player.getIdentity() == Identity.Villager) {
-//    		 player.identityLabel.setIcon(new ImageIcon(villagerImage));
-////    		 player.identityLabel.setText("villager");
-//		}
-//    	 else {
-//    		 player.identityLabel.setIcon(new ImageIcon(witchImage));
-////    		 player.identityLabel.setText("witch");
-//		}
+    	player.identityLabel.setBounds(bounds);
 
-    	 this.add(player.identityLabel);
-  		player.messageLabel.setBounds(bounds.x, bounds.y + bounds.height, 100, 50);
+    	this.add(player.identityLabel);
+  		player.messageLabel.setBounds(bounds.x, bounds.y + bounds.height, 200, 50);
+  		player.scoreLabel.setBounds(bounds.x, bounds.y + bounds.height + 50, 50, 50);
+  		this.add(player.scoreLabel);
   		this.add(player.messageLabel);
      }
      
-     public void setIdentity() {
-    	 Icon unknownImage = null;
-    	 Icon witchImage = null;
-    	 Icon villagerImage = null;
-    	 Icon scaledImage = null;
-  		
-    	 unknownImage = new ImageIcon("./image/identity/unknown.png");
-    	 witchImage = new ImageIcon("./image/identity/witch.png");
-    	 villagerImage = new ImageIcon("./image/identity/villager.png");
-    	 for (Map.Entry<Player, Rectangle> entry : mapPlayers.entrySet()) {
- 			entry.getKey().identityLabel.setText("acvdf");
- 			
- 			
- 		}
-     }
+     
      
      
      public JLabel getInfoLabel() {
     	 return infoLabel;
      }
-
+     
+     public void setInfoLabel(String text) {
+    	 infoLabel.setText(text);
+     }
 }

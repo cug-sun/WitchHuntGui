@@ -111,10 +111,11 @@ public class TheInquisition extends RumourCard {
 				else {
 					if(player.getHand().size() > 1) {
 						
-					}else(player.acc)
+					}
+//					else(player.acc)
 					setIsUsed(false);
 				}
 			}
-	}
+	
 
 }
