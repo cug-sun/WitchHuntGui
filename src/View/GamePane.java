@@ -12,14 +12,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,12 +31,13 @@ import javax.swing.JPanel;
 
 import RumourCards.RumourCard;
 import Controller.Game;
+import Model.Identity;
 import Model.Player;
 
 
 
 public class GamePane extends JPanel {
-	private Game model;
+	private Game game;
 	
 	private ArrayList<Player> playerList;
 	
@@ -46,14 +49,12 @@ public class GamePane extends JPanel {
 	
 	private JLabel infoLabel;
 	
-	private JButton accuseButton;
-	
-	private JButton useCardButton;
+	private JButton startButton;
 	
 	public GamePane(Game game) {
 		// TODO 自动生成的构造函数存根
 		
-		this.model = game;
+		this.game = game;
 		this.playerList = game.getPlayerList();
 		mapCards = new HashMap<>(playerList.get(0).getHand().size()*2);
 		mapPlayers = new HashMap<>(playerList.size() * 2);
@@ -80,33 +81,39 @@ public class GamePane extends JPanel {
                 }
 			}
 		});
+		
+		initComponent();
+	}
+	
+	public void initComponent() {
+		this.setLayout(null);
+		startButton = new JButton("start");
 		infoLabel = new JLabel();
+		startButton.setBounds(700, 300, 100, 30);
+		infoLabel.setBounds(700, 300, 200, 30);
+		
+		this.add(startButton);
 		this.add(infoLabel);
-		System.out.println(getWidth()+getHeight());
-		accuseButton = new JButton("accuse");
-		accuseButton.setLocation(500, 700);
-		useCardButton = new JButton("use card");
-		this.add(accuseButton);
-		accuseButton.addActionListener(new ActionListener() {
+//		System.out.println(mapPlayers.isEmpty());
+		
+		
+
+		
+		startButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
+				startButton.setEnabled(false);
+				game.playBot();
 				
-				if (game.getCurrentPlayer() == game.getPlayerList().get(0)) {
-					ArrayList<Integer> accusable = new ArrayList<Integer>();
-					for(Player player: game.getPlayerList()) {
-						if (player.isRevealed() == false) {
-							accusable.add(player.getPlayerId());
-						}
-					}
-					Object[] options = accusable.toArray();
-					JOptionPane.showInputDialog(null, "You choose player", "Accuse", JOptionPane.INFORMATION_MESSAGE,null , options, options[0]);
-				}
 				
 			}
 		});
 		
+		
+		
+		game.setGamePane(this);
 	}
 	
 	@Override
@@ -165,10 +172,10 @@ public class GamePane extends JPanel {
          for(Player player : playerList) {
         	 Rectangle playerBounds = mapPlayers.get(player);
         	 if(playerBounds != null) {
-        		 g2d.setColor(Color.WHITE);
-        		 g2d.fill(playerBounds);
-        		 g2d.setColor(Color.WHITE);
-        		 g2d.draw(playerBounds);
+//        		 g2d.setColor(Color.WHITE);
+//        		 g2d.fill(playerBounds);
+//        		 g2d.setColor(Color.WHITE);
+//        		 g2d.draw(playerBounds);
         		 Graphics2D copy = (Graphics2D) g2d.create();
         		 paintPlayer(copy, player, playerBounds);
         		 copy.dispose();
@@ -176,7 +183,7 @@ public class GamePane extends JPanel {
         		 
         	 }
          }
-//         paintAccuse(g2d);
+
          g2d.dispose();
      }
 
@@ -197,34 +204,63 @@ public class GamePane extends JPanel {
          
          Image scaledImage = image.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
          g2d.drawImage(scaledImage, bounds.x, bounds.y, null);
-       
-//         g2d.setFont(new Font("Bradley Hand ITC", Font.BOLD, 16));
-//         g2d.drawString("Witch Hunt", 50,50);
-//         g2d.drawImage(image,getWidth()/2,getHeight()/2,null);
+
      }
      protected void paintPlayer(Graphics2D g2d, Player player, Rectangle bounds) {
-    	 Image identity = null;
-  		try {
-  			identity = ImageIO.read(new File("./image/identity/unknown1.png"));
-  		} catch (IOException e) {
-  			// TODO 自动生成的 catch 块
-  			e.printStackTrace();
-  		}
-//  		Image scaledImage = identity.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
-  		g2d.drawImage(identity, bounds.x, bounds.y, null);
-  		player.messageLabel.setBounds(bounds.x, bounds.y + identity.getHeight(null), 100, 50);
+    	 
+    	 Image unknownImage = null;
+    	 Image witchImage = null;
+    	 Image villagerImage = null;
+    	 
+  		
+    	 try {
+			unknownImage = ImageIO.read(new File("./image/identity/unknown1.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
+			witchImage = ImageIO.read(new File("./image/identity/witch.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
+	    	 villagerImage = ImageIO.read(new File("./image/identity/villager.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+    	 
+
+    	 player.identityLabel.setBounds(bounds);
+//    	 if (player.isRevealed() == false) {
+//    		 player.identityLabel.setIcon(new ImageIcon(unknownImage));
+////    		 player.identityLabel.setText("unknown");
+//		}
+//    	 else if (player.getIdentity() == Identity.Villager) {
+//    		 player.identityLabel.setIcon(new ImageIcon(villagerImage));
+////    		 player.identityLabel.setText("villager");
+//		}
+//    	 else {
+//    		 player.identityLabel.setIcon(new ImageIcon(witchImage));
+////    		 player.identityLabel.setText("witch");
+//		}
+
+    	 this.add(player.identityLabel);
+  		player.messageLabel.setBounds(bounds.x, bounds.y + bounds.height, 100, 50);
   		this.add(player.messageLabel);
      }
      
-     public void paintAccuse(Graphics2D g2d) {
-		Player accusePlayer = model.findPlayer(model.getAccuse()[0]);
-		Player accusedPlayer = model.findPlayer(model.getAccuse()[1]);
-		Rectangle dialog = new Rectangle((int)mapPlayers.get(accusePlayer).getX(), (int)mapPlayers.get(accusePlayer).getY(), 50, 20);
-		g2d.drawString("123456", (int)mapPlayers.get(accusePlayer).getX(), (int)mapPlayers.get(accusePlayer).getY());
-		
-	}
+     public void setIdentity() {
+    	 Icon unknownImage = null;
+    	 Icon witchImage = null;
+    	 Icon villagerImage = null;
+    	 Icon scaledImage = null;
+  		
+    	 unknownImage = new ImageIcon("./image/identity/unknown.png");
+    	 witchImage = new ImageIcon("./image/identity/witch.png");
+    	 villagerImage = new ImageIcon("./image/identity/villager.png");
+    	 for (Map.Entry<Player, Rectangle> entry : mapPlayers.entrySet()) {
+ 			entry.getKey().identityLabel.setText("acvdf");
+ 			
+ 			
+ 		}
+     }
+     
      
      public JLabel getInfoLabel() {
     	 return infoLabel;
      }
+
 }

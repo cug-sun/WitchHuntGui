@@ -1,5 +1,6 @@
 package View;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,23 +21,14 @@ public class GameFrame extends JFrame {
 		this.setResizable(false);
 		
 		gamePane = new GamePane(model);
-		
+		//set game panel
 		this.getContentPane().add(gamePane);
-//		gamePane.paintAccuse(null);
 		
 		this.setUndecorated(false);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-		JLabel label = new JLabel("123345");
-//		gamePane.add(label);
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO 自动生成的 catch 块
-//			e.printStackTrace();
-//		}
-//		gamePane.remove(label);
-		gamePane.getInfoLabel().setText("accuse player 2");
+		
+		
 	}
 
 	public GamePane getGamePane() {

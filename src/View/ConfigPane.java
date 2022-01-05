@@ -65,24 +65,6 @@ public class ConfigPane extends JPanel {
 		
 	}
 	
-	public void setIdentity() {
-		String[] options = {"Witch","Villager"};
-		String identity = (String)JOptionPane.showInputDialog(null,"You choose to be", "Identity",JOptionPane.INFORMATION_MESSAGE, null,options,options[0] );
-		if(identity == "Viilager") {
-			game.getPlayerList().get(0).setIdentity(Identity.Villager);
-		}
-		else {
-			game.getPlayerList().get(0).setIdentity(Identity.Witch);
-		}
-		
-	}
-	public void setPlayers() {
-		Integer[] options = {3,4,5,6};
-		int nPlayer = (int)JOptionPane.showInputDialog(null,"Number of players", "Initialize",JOptionPane.INFORMATION_MESSAGE, null,options, options[0]);
-		String mes = "Each player has " + 12/nPlayer + " rumour cards";
-		JOptionPane.showMessageDialog(null, mes);
-		game.setnPlayer(nPlayer);
-		game.initPlayer();
-	}
+	
 
 }

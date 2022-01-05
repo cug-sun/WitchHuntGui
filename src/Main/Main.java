@@ -1,18 +1,28 @@
 package Main;
 
 import java.awt.EventQueue;
+import java.io.IOException;
+
+
+import View.ConfigFrame;
+
 
 
 
 public class Main {
 
-	public Main() {
-		// TODO 自动生成的构造函数存根
-	}
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO 自动生成的方法存根
 		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ConfigFrame configFrame = new ConfigFrame();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 }

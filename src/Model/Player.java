@@ -1,8 +1,14 @@
 package Model;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import Controller.Game;
 import RumourCards.*;
@@ -26,16 +32,39 @@ public class Player {
 	//if this player is chosen by Evil Eye, id of the player who uses Evil eye
 	private int evilEye;
 	
+	private Image unknownImage = null;
+	
+	private Image witchImage = null;
+	
+	private Image villagerImage = null;
+	
 	public JLabel messageLabel;
 	
+	public JLabel identityLabel;
+	
 	public Player(int playerId) {
+		loadImage();
+		
 		this.playerId = playerId;
 		this.points = 0;
 		this.isIdRevealed = false;
 		this.hand = new ArrayList<RumourCard>();
 		this.revealedCards = new ArrayList<RumourCard>();
 		this.evilEye = 0;
+		
 		this.messageLabel = new JLabel(Integer.toString(points));
+		this.identityLabel = new JLabel(new ImageIcon(unknownImage));
+	}
+	
+	public void loadImage() {
+		try {
+			unknownImage = ImageIO.read(new File("./image/identity/unknown1.png")).getScaledInstance(117, 168,Image.SCALE_SMOOTH);
+			witchImage = ImageIO.read(new File("./image/identity/witch.png")).getScaledInstance(117, 168,Image.SCALE_SMOOTH);
+	    	villagerImage = ImageIO.read(new File("./image/identity/villager.png")).getScaledInstance(117, 168,Image.SCALE_SMOOTH);
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 	//get field isIdReavealed
 	public boolean isRevealed() {
@@ -85,6 +114,7 @@ public class Player {
 		if(this.isIdRevealed == false) {
 			this.isIdRevealed = true;
 			System.out.println("Player "+ this.playerId + "'s identity card is revealed, he/she is a "+ this.identity);
+			identityLabel.setIcon(new ImageIcon(witchImage));
 			return true;
 		}
 		else {
@@ -198,48 +228,59 @@ public class Player {
 					+ "resolving its Witch? effect.");
 			System.out.println("You have these cards:");
 			this.displayHand();
-			Scanner scanner = new Scanner(System.in);
-			switch (scanner.nextInt()) {
-			case 1: {
-				//reveal identity card
-				System.out.println("You choose to revealed your identity card");
-				this.revealIdentity();
-				if (this.getIdentity() == Identity.Villager) {
-					System.out.printf("Player %d is a villager, player %d gains no point, player %d will play next turn\n",
-							this.getPlayerId(),accusePlayer.getPlayerId(),this.getPlayerId());
-					accusePlayer.updatePoints(0);
-					game.setCurrentPlayer(accusedPlayer);
-				}
-				else if (this.getIdentity() == Identity.Witch) {
-					System.out.printf("Player %d is a witch, player %d gains 1 point, player %d will play next turn\n",
-							this.getPlayerId(),accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
-					accusePlayer.updatePoints(1);
-					game.setCurrentPlayer(accusePlayer);
-				}
+			String[] actions = {"reveal","use Witch?"};
+			int choice = JOptionPane.showOptionDialog(null, "choose one", "your turn",1, 3, null, actions, actions[0]);
+			switch (choice) {
+			case 0: {
+				
+				revealIdentity();
+			}
+			case 1:{
 				break;
 			}
-			case 2: {
-				//resolve witch! effect
-				game.setCurrentPlayer(this);
-				System.out.println("You choose to reveal a Rumour card from you hand and resolving its Witch? effect");
-				System.out.println("You have these Rumour cards in your hand, which one do you want to use ?");
-				this.displayHand();
-				RumourCard chosenCard = hand.get(scanner.nextInt()-1);
-				System.out.printf("You choose %s to effect it's Witch? effect\n",chosenCard.getCardName().toString());
-				chosenCard.witchEffect(game);
-				//add this card to revealed card pile
-				if(chosenCard.getIsUsed() == true) {
-					hand.remove(chosenCard);
-					revealedCards.add(chosenCard);
-				}
-				else {
-					this.beAccused(game);
-				}
-				break;
 			}
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + scanner.nextInt());
-			}
+//			Scanner scanner = new Scanner(System.in);
+//			switch (scanner.nextInt()) {
+//			case 1: {
+//				//reveal identity card
+//				System.out.println("You choose to revealed your identity card");
+//				this.revealIdentity();
+//				if (this.getIdentity() == Identity.Villager) {
+//					System.out.printf("Player %d is a villager, player %d gains no point, player %d will play next turn\n",
+//							this.getPlayerId(),accusePlayer.getPlayerId(),this.getPlayerId());
+//					accusePlayer.updatePoints(0);
+//					game.setCurrentPlayer(accusedPlayer);
+//				}
+//				else if (this.getIdentity() == Identity.Witch) {
+//					System.out.printf("Player %d is a witch, player %d gains 1 point, player %d will play next turn\n",
+//							this.getPlayerId(),accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
+//					accusePlayer.updatePoints(1);
+//					game.setCurrentPlayer(accusePlayer);
+//				}
+//				break;
+//			}
+//			case 2: {
+//				//resolve witch! effect
+//				game.setCurrentPlayer(this);
+//				System.out.println("You choose to reveal a Rumour card from you hand and resolving its Witch? effect");
+//				System.out.println("You have these Rumour cards in your hand, which one do you want to use ?");
+//				this.displayHand();
+//				RumourCard chosenCard = hand.get(scanner.nextInt()-1);
+//				System.out.printf("You choose %s to effect it's Witch? effect\n",chosenCard.getCardName().toString());
+//				chosenCard.witchEffect(game);
+//				//add this card to revealed card pile
+//				if(chosenCard.getIsUsed() == true) {
+//					hand.remove(chosenCard);
+//					revealedCards.add(chosenCard);
+//				}
+//				else {
+//					this.beAccused(game);
+//				}
+//				break;
+//			}
+//			default:
+//				throw new IllegalArgumentException("Unexpected value: " + scanner.nextInt());
+//			}
 		}
 		else {
 			System.out.println("You don't have any card in your hand, you must reveal your identity card");
@@ -272,134 +313,160 @@ public class Player {
 	}
 	
 	public void playTurn(Game game) {
-		ArrayList<Player> playerList = game.getPlayerList();
-		//when Evil eye is used
-		if (this.getEvilEye() != 0) {
-			System.out.printf("Player %d, you are chosen by Evil Eye, you must accuse a player other than player %d if possible\n", 
-					this.getPlayerId(), this.getEvilEye());
-			System.out.println("You can accuse another player of being a Witch\nWhich player ?");
-			
-			if (playerList.size() > 2) {
-				for (Player player : playerList) {
-					if(player == this) {
-						continue;
-					}
-					else if (player.getPlayerId() == this.getEvilEye()) {
-						continue;
-					}
-					else {
-						if (player.isRevealed() == false) {
-							System.out.printf("Player %d\n", player.getPlayerId());
-						}
-						else {
-							System.out.printf("Player %d has been revealed as a %s\n", player.getPlayerId(),player.getIdentity().toString());
-						}
-					}
-				}
-			}
-			else {
-				//if there are only 2 players, then must accuse the player who used Evil Eye
-				System.out.println("There are only 2 players...");
-				for (Player player : playerList) {
-					if(player == this) {
-						continue;
-					}
-					else {
-						if (player.isRevealed() == false) {
-							System.out.printf("Player %d\n", player.getPlayerId());
-						}
-						else {
-							System.out.printf("Player %d has been revealed as a %s\n", player.getPlayerId(),player.getIdentity().toString());
-						}
-					}
-				}
-			}
-			this.setEvilEye(0);
-			Scanner scanner = new Scanner(System.in);
-			int chosenId = scanner.nextInt();
-			Player accusedPlayer = game.findPlayer(chosenId);
-			
-			//whether this player can be accused
-			if(accusedPlayer.isRevealed() == true) {
-				System.out.println("This player's identity is revealed, you can't accuse him/her");
-				game.setCurrentPlayer(this);
-			}
-			else {
-			game.getAccuse()[0] = this.getPlayerId();
-			game.getAccuse()[1] = accusedPlayer.getPlayerId();
-			//the accused player acts
-			accusedPlayer.beAccused(game);
-			//setCurrentPlayer(accusedPlayer);
-			}
-		}
+//		ArrayList<Player> playerList = game.getPlayerList();
+//		//when Evil eye is used
+//		if (this.getEvilEye() != 0) {
+//			System.out.printf("Player %d, you are chosen by Evil Eye, you must accuse a player other than player %d if possible\n", 
+//					this.getPlayerId(), this.getEvilEye());
+//			System.out.println("You can accuse another player of being a Witch\nWhich player ?");
+//			
+//			if (playerList.size() > 2) {
+//				for (Player player : playerList) {
+//					if(player == this) {
+//						continue;
+//					}
+//					else if (player.getPlayerId() == this.getEvilEye()) {
+//						continue;
+//					}
+//					else {
+//						if (player.isRevealed() == false) {
+//							System.out.printf("Player %d\n", player.getPlayerId());
+//						}
+//						else {
+//							System.out.printf("Player %d has been revealed as a %s\n", player.getPlayerId(),player.getIdentity().toString());
+//						}
+//					}
+//				}
+//			}
+//			else {
+//				//if there are only 2 players, then must accuse the player who used Evil Eye
+//				System.out.println("There are only 2 players...");
+//				for (Player player : playerList) {
+//					if(player == this) {
+//						continue;
+//					}
+//					else {
+//						if (player.isRevealed() == false) {
+//							System.out.printf("Player %d\n", player.getPlayerId());
+//						}
+//						else {
+//							System.out.printf("Player %d has been revealed as a %s\n", player.getPlayerId(),player.getIdentity().toString());
+//						}
+//					}
+//				}
+//			}
+//			this.setEvilEye(0);
+//			Scanner scanner = new Scanner(System.in);
+//			int chosenId = scanner.nextInt();
+//			Player accusedPlayer = game.findPlayer(chosenId);
+//			
+//			//whether this player can be accused
+//			if(accusedPlayer.isRevealed() == true) {
+//				System.out.println("This player's identity is revealed, you can't accuse him/her");
+//				game.setCurrentPlayer(this);
+//			}
+//			else {
+//			game.getAccuse()[0] = this.getPlayerId();
+//			game.getAccuse()[1] = accusedPlayer.getPlayerId();
+//			//the accused player acts
+//			accusedPlayer.beAccused(game);
+//			//setCurrentPlayer(accusedPlayer);
+//			}
+//		}
+//		
+//		//general situation
+//		else {
+//			System.out.printf("Player %d, it's your turn\n", this.getPlayerId());
+//			System.out.println("You have these cards:");
+//			this.displayHand();
+//			System.out.println("you must either:\n" +
+//					"1.Accuse another player of being a Witch.\nor\n"
+//					+ "2.Reveal a Rumour card from your hand and play it face up in front of yourself, resolving its Hunt! effect.");
+//			Scanner scanner = new Scanner(System.in);
+//			switch (scanner.nextInt()) {
+//			case 1: {
+//				//Accuse another player of being a Witch
+//				System.out.println("You choose to accuse another player of being a Witch\nWhich player ?");
+//				game.displayUnaccusedPlayers();
+//				int chosenId = scanner.nextInt();
+//				Player accusedPlayer = game.findPlayer(chosenId);
+//				
+//				//this player can or can't be accused
+//				if(accusedPlayer.isRevealed() == true) {
+//					System.out.println("this player'identity is revealed, you can't accuse him/her");
+//					game.setCurrentPlayer(this);
+//				}
+//				else {
+//					game.getAccuse()[0] = this.getPlayerId();
+//					game.getAccuse()[1] = accusedPlayer.getPlayerId();
+//					//the accused player acts
+//					accusedPlayer.beAccused(game);
+//					//setCurrentPlayer(accusedPlayer);
+//				}
+//				break;
+//				
+//			}
+//			case 2: {
+//				Player player = this;
+//				//Reveal a Rumour card from hand, resolving its Hunt! effect
+//				if(!this.getHand().isEmpty()) {
+//					System.out.println("You have these Rumour cards:");
+//					this.displayHand();
+//					System.out.println("Which card do you want to use ?");
+//					RumourCard choosedCard = this.getHand().get(scanner.nextInt()-1);
+//					System.out.printf("You choose to use %s\n",choosedCard.getCardName().toString());
+//					//current player may have been changed
+//					choosedCard.huntEffect(game);
+//					if (choosedCard.getIsUsed() == true) {
+//						player.getHand().remove(choosedCard);
+//						//after using Black Cat, discard it
+//						if (choosedCard.getCardName() == RumourCardName.Black_Cat) {
+//							game.discardPile.add(choosedCard);
+//						}
+//						else {
+//							player.getRevealedCards().add(choosedCard);
+//						}
+//					}
+//					break;
+//				}
+//				else {
+//					System.out.println("You don't have any card in hand! You must accuse another player of being a witch");
+//					game.setCurrentPlayer(this);
+//					break;
+//				}	
+//			}
+//			default:
+////				throw new IllegalArgumentException("Unexpected value: " + scanner);
+//				System.out.println("Invalide input! Input again");
+//			}
+//		}
+		String[] actions = {"accuse","use card"};
+		int choice = JOptionPane.showOptionDialog(null, "choose one", "your turn",1, 3, null, actions, actions[0]);
 		
-		//general situation
-		else {
-			System.out.printf("Player %d, it's your turn\n", this.getPlayerId());
-			System.out.println("You have these cards:");
-			this.displayHand();
-			System.out.println("you must either:\n" +
-					"1.Accuse another player of being a Witch.\nor\n"
-					+ "2.Reveal a Rumour card from your hand and play it face up in front of yourself, resolving its Hunt! effect.");
-			Scanner scanner = new Scanner(System.in);
-			switch (scanner.nextInt()) {
-			case 1: {
-				//Accuse another player of being a Witch
-				System.out.println("You choose to accuse another player of being a Witch\nWhich player ?");
-				game.displayUnaccusedPlayers();
-				int chosenId = scanner.nextInt();
-				Player accusedPlayer = game.findPlayer(chosenId);
-				
-				//this player can or can't be accused
-				if(accusedPlayer.isRevealed() == true) {
-					System.out.println("this player'identity is revealed, you can't accuse him/her");
-					game.setCurrentPlayer(this);
+		switch (choice) {
+		case 0: {
+			
+			ArrayList<Integer> idList = new ArrayList<Integer>();
+			for(int i = 1; i < game.getPlayerList().size(); i++) {
+				Player player = game.getPlayerList().get(i);
+				if (player.getEvilEye() == 0) {
+					idList.add(player.getPlayerId());
 				}
-				else {
-					game.getAccuse()[0] = this.getPlayerId();
-					game.getAccuse()[1] = accusedPlayer.getPlayerId();
-					//the accused player acts
-					accusedPlayer.beAccused(game);
-					//setCurrentPlayer(accusedPlayer);
-				}
-				break;
-				
 			}
-			case 2: {
-				Player player = this;
-				//Reveal a Rumour card from hand, resolving its Hunt! effect
-				if(!this.getHand().isEmpty()) {
-					System.out.println("You have these Rumour cards:");
-					this.displayHand();
-					System.out.println("Which card do you want to use ?");
-					RumourCard choosedCard = this.getHand().get(scanner.nextInt()-1);
-					System.out.printf("You choose to use %s\n",choosedCard.getCardName().toString());
-					//current player may have been changed
-					choosedCard.huntEffect(game);
-					if (choosedCard.getIsUsed() == true) {
-						player.getHand().remove(choosedCard);
-						//after using Black Cat, discard it
-						if (choosedCard.getCardName() == RumourCardName.Black_Cat) {
-							game.discardPile.add(choosedCard);
-						}
-						else {
-							player.getRevealedCards().add(choosedCard);
-						}
-					}
-					break;
-				}
-				else {
-					System.out.println("You don't have any card in hand! You must accuse another player of being a witch");
-					game.setCurrentPlayer(this);
-					break;
-				}
-				
-				
-			}
-			default:
-//				throw new IllegalArgumentException("Unexpected value: " + scanner);
-				System.out.println("Invalide input! Input again");
-			}
+			Object[] options = idList.toArray();
+			int chosenId = (int) JOptionPane.showInputDialog(null, "player", "you choose", 1, null, options, options[0]);
+			System.out.printf("You accuse player %d of being a witch\n", chosenId);
+			Player chosenPlayer = game.findPlayer(chosenId);
+			game.getAccuse()[0] = game.getCurrentPlayer().getPlayerId();
+			game.getAccuse()[1] = chosenId;
+			chosenPlayer.beAccused(game);
+			break;
+		}
+		case 1:{
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + choice);
 		}
 	}
 }

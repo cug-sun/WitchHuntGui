@@ -1,11 +1,18 @@
 package Controller;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.text.PlainDocument;
+
+import org.ietf.jgss.Oid;
 
 import Model.Bot;
 import Model.Player;
@@ -24,6 +31,7 @@ import RumourCards.RumourCardName;
 import RumourCards.TheInquisition;
 import RumourCards.Toad;
 import RumourCards.Wart;
+import View.GamePane;
 
 
 
@@ -42,6 +50,9 @@ public class Game {
 	private Player currentPlayer;
 	//an array to save the accuse relation, accuse[0] is the playerId of player who accuses, accuse[1] is the playerId of accused player
 	private int[] accuse = new int[2];
+	
+	private GamePane gamePane;
+	
 	public Game() {
 		System.out.println("*****************Witch Hunt*****************");
 		System.out.println("Choose the number of players (3-6)");
@@ -71,6 +82,12 @@ public class Game {
 		setIdentity();
 		initPile();
 		distribute();
+		
+	}
+	
+	public void test() {
+		gamePane.getInfoLabel().setText("good luck");
+		currentPlayer.setMessageLabel("fuck you");
 	}
 	
 	public void shuffleCard() {
@@ -124,7 +141,8 @@ public class Game {
 		}
 		chooseIdentity();
 		//Randomly select start player
-		currentPlayer = playerList.get((int)(Math.random() * (nPlayer)));
+//		currentPlayer = playerList.get((int)(Math.random() * (nPlayer)));
+		currentPlayer = playerList.get(0);
 		System.out.println("Start from player " + (currentPlayer.getPlayerId()));
 	}
 	
@@ -193,11 +211,23 @@ public class Game {
 	
 	
 	
+	public GamePane getGamePane() {
+		return gamePane;
+	}
+
+	public void setGamePane(GamePane gamePane) {
+		this.gamePane = gamePane;
+	}
+
 	public void playBot() {
 		initPile();
 		distribute();
 		while(true) {
 			currentPlayer.playTurn(this);
+			gamePane.repaint();
+			hangOn();
+			
+			
 			outOfGame();
 			if (isRoundEnd()) {
 				playerList.addAll(outPlayerList);
@@ -586,6 +616,13 @@ public class Game {
 		this.initPlayer();
 	}
 	
-	
+	public void hangOn() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+	}
 	
 }

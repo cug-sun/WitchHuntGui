@@ -1,6 +1,11 @@
 package Model;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import Controller.Game;
 import RumourCards.RumourCard;
@@ -8,10 +13,23 @@ import RumourCards.RumourCard;
 
 public class Bot extends Player {
 
+	private Image witchImage;
+	
+	private Image villagerImage;
+	
+	private Image unknownImage;
+	
 	public Bot(int playerId) {
 		super(playerId);
 		// TODO 自动生成的构造函数存根
-		
+		try {
+			witchImage = ImageIO.read(new File("./image/identity/witch.png"));
+			villagerImage = ImageIO.read(new File("./image/identity/villager.png"));
+			unknownImage = ImageIO.read(new File("./image/identity/unknown.png"));
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -82,9 +100,23 @@ public class Bot extends Player {
 		//situation 1: reveal identity
 		if (this.getIdentity() == Identity.Witch) {
 			//use Witch? effect
+			System.out.printf("Player %d chooses to reveal identity card\n", this.getPlayerId());
+			setMessageLabel("reveal identity card");
+			this.revealIdentity();
+			if (this.getIdentity() == Identity.Villager) {
+				System.out.printf("Player %d gains no point, player %d will play next turn\n",accusePlayer.getPlayerId(),this.getPlayerId());
+				accusePlayer.updatePoints(0);
+				game.setCurrentPlayer(accusedPlayer);
+			}
+			else {
+				System.out.printf("Player %d gains 1 point, player %d will play next turn\n", accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
+				accusePlayer.updatePoints(1);
+				game.setCurrentPlayer(accusePlayer);
+			}
 		}
 		else {
 			System.out.printf("Player %d chooses to reveal identity card\n", this.getPlayerId());
+			setMessageLabel("reveal identity card");
 			this.revealIdentity();
 			if (this.getIdentity() == Identity.Villager) {
 				System.out.printf("Player %d gains no point, player %d will play next turn\n",accusePlayer.getPlayerId(),this.getPlayerId());
