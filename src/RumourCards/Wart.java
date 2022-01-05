@@ -11,18 +11,18 @@ public class Wart extends RumourCard {
 
 	public Wart() {
 		super();
-		// TODO 自动生成的构造函数存根
+		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
 	}
 
 	@Override
 	public RumourCardName getCardName() {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		return cardName;
 	}
 
 	@Override
 	public void witchEffect(Game game) {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		Player player = game.getCurrentPlayer();
 		System.out.println("You will take next turn");
 		game.setCurrentPlayer(player);
@@ -31,7 +31,7 @@ public class Wart extends RumourCard {
 
 	@Override
 	public void huntEffect(Game game) {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		Player player = game.getCurrentPlayer();
 		System.out.println("Choose a player to play next turn");
 		player.chooseNextPlayer(game);
@@ -41,13 +41,18 @@ public class Wart extends RumourCard {
 
 	@Override
 	public void robotWitchEffect(Game game) {
-		// TODO 自动生成的方法存根
+		System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+		game.setCurrentPlayer(game.getCurrentPlayer());
+		setIsUsed(true);
 		
 	}
 
 	@Override
 	public void robotHuntEffect(Game game) {
-		// TODO 自动生成的方法存根
+		Bot player = (Bot) game.getCurrentPlayer();
+		player.chooseNextPlayer(game);
+		System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+		setIsUsed(true);
 		
 	}
 

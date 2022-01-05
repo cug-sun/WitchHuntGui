@@ -12,18 +12,18 @@ public class EvilEye extends RumourCard {
 
 	public EvilEye() {
 		super();
-		// TODO 自动生成的构造函数存根
+		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
 	}
 
 	@Override
 	public RumourCardName getCardName() {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		return cardName;
 	}
 
 	@Override
 	public void witchEffect(Game game) {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		Player player = game.getCurrentPlayer();
 		//choose next player
 		player.chooseNextPlayer(game);
@@ -35,7 +35,7 @@ public class EvilEye extends RumourCard {
 
 	@Override
 	public void huntEffect(Game game) {
-		// TODO 自动生成的方法存根
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		Player player = game.getCurrentPlayer();
 		//choose next player
 		player.chooseNextPlayer(game);
@@ -47,14 +47,26 @@ public class EvilEye extends RumourCard {
 
 	@Override
 	public void robotWitchEffect(Game game) {
-		// TODO 自动生成的方法存根
-		
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		Bot player = (Bot) game.getCurrentPlayer();
+		//choose next player
+		player.chooseNextPlayer(game);
+		Player chosenPlayer = game.getCurrentPlayer();
+		System.out.printf("choose player %d, on his/her turn, he/she must accuse a player other than %d, if possible\n",player.getPlayerId(),chosenPlayer.getPlayerId());
+		chosenPlayer.setEvilEye(player.getPlayerId());
+		setIsUsed(true);
 	}
 
 	@Override
 	public void robotHuntEffect(Game game) {
-		// TODO 自动生成的方法存根
-		
+		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		Bot player = (Bot) game.getCurrentPlayer();
+		//choose next player
+		player.chooseNextPlayer(game);
+		Player chosenPlayer = game.getCurrentPlayer();
+		System.out.printf("choose player %d, on his/her turn, he/she must accuse a player other than %d, if possible\n",player.getPlayerId(),chosenPlayer.getPlayerId());
+		chosenPlayer.setEvilEye(player.getPlayerId());
+		setIsUsed(true);
 	}
 
 }
