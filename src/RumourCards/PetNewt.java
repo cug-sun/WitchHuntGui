@@ -64,8 +64,9 @@ public class PetNewt extends RumourCard {
 		
 		//is there any card is revealed by others
 		if (exsistCards(game) == true) {
+			System.out.println("Take one revealed Rumour card into your hand:");
 			for (RumourCard card : getExsistRevealed) {
-				System.out.println("Take one revealed Rumour card into your hand:");
+				
 				System.out.printf("%d. %s\n",getExsistRevealed.indexOf(card)+1, card.getCardName().toString());
 				System.out.println("Take one of revealed Rumour cards into your hand");
 				Scanner scanner = new Scanner(System.in);

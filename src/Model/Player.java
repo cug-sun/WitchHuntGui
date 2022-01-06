@@ -124,6 +124,7 @@ public class Player {
 		if(this.isIdRevealed == false) {
 			this.isIdRevealed = true;
 			System.out.println("Player "+ this.playerId + "'s identity card is revealed, he/she is a "+ this.identity);
+			JOptionPane.showMessageDialog(null, String.format("Player %d reveals identity card", this.getPlayerId()), null, 1);
 			if(this.identity == Identity.Villager) {
 				identityLabel.setIcon(new ImageIcon(villagerImage));
 			}
@@ -276,11 +277,40 @@ public class Player {
 			case 0: {
 				
 				revealIdentity();
-			}
-			case 1:{
 				break;
 			}
+			case 1:{
+				game.setCurrentPlayer(this);
+				System.out.println("You choose to reveal a Rumour card from you hand and resolving its Witch? effect");
+				System.out.println("You have these Rumour cards in your hand, which one do you want to use ?");
+				this.displayHand();
+				ArrayList<String> cardList = new ArrayList<String>();
+				for (RumourCard card: hand) {
+					cardList.add(card.getCardName().toString());
+				}
+				Object[] options = cardList.toArray();
+				String chosenCarName = (String)JOptionPane.showInputDialog(null, "You choose", "You have these cards", 1, null, options, options[0]);
+				RumourCard chosenCard = null;
+				for(RumourCard card: hand) {
+					if(card.getCardName().toString() == chosenCarName) {
+						chosenCard = card;
+					}
+				}
+				System.out.printf("You choose to use %s\n",chosenCard.getCardName().toString());
+				chosenCard.witchEffect(game);
+				//add this card to revealed card pile
+				if(chosenCard.getIsUsed() == true) {
+					hand.remove(chosenCard);
+					revealedCards.add(chosenCard);
+					game.getGamePane().repaint();
+				}
+				else {
+					this.beAccused(game);
+				}
+
+				break;
 			}
+		}
 //			Scanner scanner = new Scanner(System.in);
 //			switch (scanner.nextInt()) {
 //			case 1: {
@@ -326,6 +356,7 @@ public class Player {
 		}
 		else {
 			System.out.println("You don't have any card in your hand, you must reveal your identity card");
+			JOptionPane.showMessageDialog(null, "You don't have any card in your hand, you must reveal your identity card", null, 1);
 			this.revealIdentity();
 		}
 		
