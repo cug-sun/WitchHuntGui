@@ -153,9 +153,21 @@ public class GamePane extends JPanel {
      }
 	 @Override
 	 protected void paintComponent(Graphics g) {
-         super.paintComponent(g);
+		 super.paintComponent(g);
+		 mapCards.clear();
+		 ArrayList<RumourCard> hand = playerList.get(0).getHand();
+		 int cardHeight = (getHeight() - 20) / 3;
+         int cardWidth = (int) (cardHeight * 0.7);
+         int xDelta = cardWidth+5;
+         int xPos = (int) ((getWidth() / 2) - (cardWidth * (hand.size() / 4.0)));
+         int yPos = (getHeight() - 20) - cardHeight;
+		 for (RumourCard card : hand) {
+             Rectangle bounds = new Rectangle(xPos, yPos, cardWidth, cardHeight);
+             mapCards.put(card, bounds);
+             xPos += xDelta;
+         }
+         
          Graphics2D g2d = (Graphics2D) g.create();
-         ArrayList<RumourCard> hand = playerList.get(0).getHand();;
          for (RumourCard card : hand) {
              Rectangle bounds = mapCards.get(card);
 //             System.out.println(bounds);

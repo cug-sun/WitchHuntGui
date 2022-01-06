@@ -1,6 +1,9 @@
 package RumourCards;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import Model.Bot;
 import Controller.Game;
@@ -27,17 +30,33 @@ public class HookedNose extends RumourCard {
 		Player player = game.getCurrentPlayer();
 		System.out.println("You can take one card from the hand of the player who accused you");
 		Player accusePlayer = game.findPlayer(game.getAccuse()[0]);
+		ArrayList<String> cardList = new ArrayList<String>();
+		for(RumourCard card: accusePlayer.getHand()) {
+			cardList.add(card.getCardName().toString());
+		}
+		Object[] options = cardList.toArray();
+		
 		System.out.printf("Player %d has these Rumour cards\n",accusePlayer.getPlayerId());
 		accusePlayer.displayHand();
 		System.out.println("Which card do you want to take ?");
-		Scanner scanner = new Scanner(System.in);
-	    RumourCard choosedCard = accusePlayer.getHand().get(scanner.nextInt()-1);
-	    System.out.printf("You take %s from player %d\n",choosedCard.getCardName().toString(),accusePlayer.getPlayerId());
-	    accusePlayer.getHand().remove(choosedCard);
-	    player.addHand(choosedCard);
+		String chosenCarName = (String)JOptionPane.showInputDialog(null, "You take", String.format("Player %d has these cards", accusePlayer.getPlayerId()), 1, null, options, options[0]);
+//		Scanner scanner = new Scanner(System.in);
+//	    RumourCard choosedCard = accusePlayer.getHand().get(scanner.nextInt()-1);
+		RumourCard chosenCard = null;
+		for(RumourCard card: player.getHand()) {
+			if(card.getCardName().toString() == chosenCarName) {
+				chosenCard = card;
+			}
+		}
+	    System.out.printf("You take %s from player %d\n",chosenCard.getCardName().toString(),accusePlayer.getPlayerId());
+	    JOptionPane.showMessageDialog(null, String.format("You take %s from player %d", chosenCard.getCardName().toString(),accusePlayer.getPlayerId()), "Hooked Nose", 1);
+	    accusePlayer.getHand().remove(chosenCard);
+	    player.addHand(chosenCard);
 	    System.out.println("You will take next turn");
+	    JOptionPane.showMessageDialog(null,"You will take next turn","Hooked Nose",1);
 	    game.setCurrentPlayer(player);
 	    setIsUsed(true);
+	    game.getGamePane().repaint();
 		
 	}
 
@@ -53,10 +72,11 @@ public class HookedNose extends RumourCard {
 		int index = (int) (Math.random()*chosenPlayer.getHand().size());
 		RumourCard chosenCard = chosenPlayer.getHand().get(index);
 		System.out.printf("You randomly take %s from his/her hand\n",chosenCard.getCardName().toString());
+		JOptionPane.showMessageDialog(null,String.format("You randomly take %s from his/her hand\n",chosenCard.getCardName().toString()),"Hooked Nose",1);
 		chosenPlayer.getHand().remove(chosenCard);
 		player.addHand(chosenCard);
 		setIsUsed(true);
-		
+		game.getGamePane().repaint();
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -50,6 +52,7 @@ public class PetNewt extends RumourCard {
 	public void witchEffect(Game game) {
 		// TODO 自动生成的方法存根
 		game.setCurrentPlayer(game.getCurrentPlayer());
+		JOptionPane.showMessageDialog(null, "You will play next turn", "Pet Newt", 1);
 		setIsUsed(true);
 
 	}

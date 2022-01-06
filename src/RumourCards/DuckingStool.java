@@ -4,6 +4,8 @@ import Model.Bot;
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -30,16 +32,18 @@ public class DuckingStool extends RumourCard {
 		
 		player.chooseNextPlayer(game);
 		Player chosenPlayer = game.getCurrentPlayer();
-		boolean duckingTool = false;
+//		boolean duckingTool = false;
+//		
+//		for (RumourCard card : chosenPlayer.getRevealedCards()) {
+//			if(card.getCardName() == RumourCardName.Wart) {
+//				duckingTool = true;
+//				break;
+//			}
+//		}
 		//when a player has a revealed Wart, he/she can't be chosen by Ducking Stool
-		for (RumourCard card : chosenPlayer.getRevealedCards()) {
-			if(card.getCardName() == RumourCardName.Wart) {
-				duckingTool = true;
-				break;
-			}
-		}
-		if (duckingTool) {
+		if (chosenPlayer.haveWart() == true) {
 			System.out.printf("Player %d has a revealed Wart, he/she can't be chosen by Ducking Stool!\n",chosenPlayer.getPlayerId());
+			JOptionPane.showMessageDialog(null,String.format("Player %d has a revealed Wart, he/she can't be chosen by Ducking Stool!", chosenPlayer.getPlayerId()),"Ducking Stool",0);
 			game.setCurrentPlayer(player);
 			setIsUsed(false);
 		}
@@ -52,7 +56,7 @@ public class DuckingStool extends RumourCard {
 
 	@Override
 	public void huntEffect(Game game) {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		Player player = game.getCurrentPlayer();
 		//choose a player, they must reveal their identity or discard a card from their hand
 		System.out.println("You can choose a player, they must reveal their identity or discard a card from their hand");

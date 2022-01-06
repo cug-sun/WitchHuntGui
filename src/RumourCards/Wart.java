@@ -1,6 +1,9 @@
 package RumourCards;
 
 import Model.Bot;
+
+import javax.swing.JOptionPane;
+
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -11,18 +14,18 @@ public class Wart extends RumourCard {
 
 	public Wart() {
 		super();
-		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
+		// TODO 自动生成的方法存根
 	}
 
 	@Override
 	public RumourCardName getCardName() {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		return cardName;
 	}
 
 	@Override
 	public void witchEffect(Game game) {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		Player player = game.getCurrentPlayer();
 		System.out.println("You will take next turn");
 		game.setCurrentPlayer(player);
@@ -31,9 +34,10 @@ public class Wart extends RumourCard {
 
 	@Override
 	public void huntEffect(Game game) {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		Player player = game.getCurrentPlayer();
 		System.out.println("Choose a player to play next turn");
+		JOptionPane.showMessageDialog(null,"You will take next turn","Wart",1);
 		player.chooseNextPlayer(game);
 		setIsUsed(true);
 

@@ -51,6 +51,7 @@ public class Bot extends Player {
 		int index = (int) (Math.random() * (this.hand.size()));
 		RumourCard chosenCard = this.hand.get(index);
 		System.out.printf("Player %d discards %s", this.getPlayerId(), chosenCard.getCardName().toString());
+		setMessageLabel(String.format("discard %s", chosenCard.getCardName().toString()));
 		this.hand.remove(index);
 	}
 	//choose randomly another player
@@ -75,6 +76,12 @@ public class Bot extends Player {
 			messageLabel.setText(String.format("accuse player %d", accusedPlayer.getPlayerId()));
 			game.getAccuse()[0] = this.getPlayerId();
 			game.getAccuse()[1] = accusedPlayer.getPlayerId();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 			accusedPlayer.beAccused(game);
 		}
 		else {

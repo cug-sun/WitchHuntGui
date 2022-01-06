@@ -1,6 +1,9 @@
 package RumourCards;
 
 import Model.Bot;
+
+import javax.swing.JOptionPane;
+
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -11,25 +14,26 @@ public class Toad extends RumourCard {
 
 	public Toad() {
 		super();
-		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
+		// TODO 自动生成的方法存根
 	}
 
 	@Override
 	public RumourCardName getCardName() {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		return cardName;
 	}
 
 	@Override
 	public void witchEffect(Game game) {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		game.setCurrentPlayer(game.getCurrentPlayer());
+		JOptionPane.showMessageDialog(null, "You will play next turn", "Toad", 1);
 		setIsUsed(true);
 	}
 
 	@Override
 	public void huntEffect(Game game) {
-		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		// TODO 自动生成的方法存根
 		//reveal your identity
 				Player player = game.getCurrentPlayer();
 						
@@ -51,12 +55,14 @@ public class Toad extends RumourCard {
 							leftIndex = 0;
 							Player chosenPlayer = game.getPlayerList().get(leftIndex);
 							System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
+							JOptionPane.showMessageDialog(null, String.format("Player %d plays next turn", chosenPlayer.getPlayerId()), "Pauldron", 1);
 							game.setCurrentPlayer(chosenPlayer);
 							setIsUsed(true);
 						}
 						else {
 							Player chosenPlayer = game.getPlayerList().get(leftIndex);
 							System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
+							JOptionPane.showMessageDialog(null, String.format("Player %d plays next turn", chosenPlayer.getPlayerId()), "Pauldron", 1);
 							game.setCurrentPlayer(chosenPlayer);
 							setIsUsed(true);
 						}
@@ -65,6 +71,7 @@ public class Toad extends RumourCard {
 				else {
 					//can't use Hunt! effect return to the step choose action
 					System.out.println("Your identity has been revealed, you can't use its Hunt! effect");
+					JOptionPane.showMessageDialog(null, "Your identity has been revealed, you can't use its Hunt! effect", "Pauldron", 0);
 					game.setCurrentPlayer(player);
 					super.isUsed = false;
 				}

@@ -1,6 +1,9 @@
 package RumourCards;
 
 import Model.Bot;
+
+import javax.swing.JOptionPane;
+
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -26,6 +29,7 @@ public class Broomstick extends RumourCard {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		Player player = game.getCurrentPlayer();
 		System.out.println("You will take next turn");
+		JOptionPane.showMessageDialog(null,"You will take next turn","Broomstick",1);
 		game.setCurrentPlayer(player);
 		setIsUsed(true);
 	}
