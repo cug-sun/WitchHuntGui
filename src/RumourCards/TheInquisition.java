@@ -107,12 +107,10 @@ public class TheInquisition extends RumourCard {
 					setIsUsed(true);
 					
 				}
-				//accuse another
-				else {
-					if(player.getHand().size() > 1) {
-						
-					}
-//					else(player.acc)
+				//accuse another player
+			else{
+					player.chooseNextPlayer(game);
+					System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
 					setIsUsed(false);
 				}
 			}

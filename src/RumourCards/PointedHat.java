@@ -78,13 +78,43 @@ public class PointedHat extends RumourCard {
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的方法存根
-		
+		Bot player = (Bot) game.getCurrentPlayer();
+		if(!player.getRevealedCards().isEmpty()) {
+			RumourCard chosenCard = player.getRevealedCards().get((int) (Math.random() * (player.getHand().size())));
+			chosenCard.setIsUsed(false);
+			player.addHand(chosenCard);
+			player.getRevealedCards().remove(chosenCard);
+			//current player takes next turn
+			System.out.printf("player %d will take next turn",player.getPlayerId());
+			game.setCurrentPlayer(game.getCurrentPlayer());
+			setIsUsed(true);
+		}
+		else {
+			player.chooseNextPlayer(game);
+			System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+			setIsUsed(false);
+		}
 	}
 
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的方法存根
-		
-	}
+		Bot player = (Bot) game.getCurrentPlayer();
+		if(!player.getRevealedCards().isEmpty()) {
+			RumourCard chosenCard = player.getRevealedCards().get((int) (Math.random() * (player.getHand().size())));
+			chosenCard.setIsUsed(false);
+			player.addHand(chosenCard);
+			player.getRevealedCards().remove(chosenCard);
+			//current player takes next turn
+			System.out.printf("player %d will take next turn",player.getPlayerId());
+			game.setCurrentPlayer(game.getCurrentPlayer());
+			setIsUsed(true);
+		}
+		else {
+			player.chooseNextPlayer(game);
+			System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+			setIsUsed(false);
+		}
 
+	}
 }

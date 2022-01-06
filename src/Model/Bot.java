@@ -122,6 +122,7 @@ public class Bot extends Player {
 		
 	}
 	
+
 	
 	//iterate playerList, return an instance of Player if there is a player whose identity card is not revealed
 	//consider card evil eye

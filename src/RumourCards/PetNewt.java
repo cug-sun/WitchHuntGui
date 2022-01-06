@@ -101,13 +101,46 @@ public class PetNewt extends RumourCard {
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的方法存根
-		
+		System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+		game.setCurrentPlayer(game.getCurrentPlayer());
+		setIsUsed(true);
 	}
 
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的方法存根
-		
+		Bot player = (Bot) game.getCurrentPlayer();
+		//is there any card is revealed by others
+				if (exsistCards(game) == true) {
+					for (RumourCard card : getExsistRevealed) {
+						RumourCard chosenCard = getExsistRevealed.get((int) (Math.random() * (player.getHand().size())));
+						chosenCard.setIsUsed(false);
+						player.addHand(chosenCard);
+						//remove chosen card from previous player
+						for(Player p: game.getPlayerList()) {
+							if (!p.getRevealedCards().isEmpty()) {
+								for (Iterator<RumourCard> it = p.getRevealedCards().iterator(); it.hasNext();) {
+									RumourCard rumourCard = it.next();
+									if (rumourCard.equals(chosenCard)) {
+										it.remove();
+									}
+									
+								}
+							}
+							
+						}
+						
+						
+						//choose the next player
+						player.chooseNextPlayer(game);
+					}
+					setIsUsed(true);
+				} 
+				else {
+					player.chooseNextPlayer(game);
+					System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
+					setIsUsed(false);
+				}
 	}
 
 }

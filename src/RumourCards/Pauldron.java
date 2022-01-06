@@ -81,46 +81,49 @@ public class Pauldron extends RumourCard {
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
+		Bot player = (Bot) game.getCurrentPlayer();
+		Player accusePlayer = game.findPlayer(game.getAccuse()[0]);
 		
+		//Randomly select the discard
+		RumourCard chosenCard = game.findPlayer(game.getAccuse()[0]).getHand().get((int)(Math.random() * (player.getHand().size())));
+	    accusePlayer.getHand().remove(chosenCard);
+	    game.getDiscardPile().add(chosenCard);
+	    game.setCurrentPlayer(player);
+	    setIsUsed(true);
 	}
 
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
-		//reveal your identity
 		Bot player = (Bot) game.getCurrentPlayer();
-						
-		//determine the player's identity is revealed or not
-		if (player.isRevealed() == false) {
-			player.revealIdentity();
-							
-			//Determine the identity
-			if(player.getIdentity() == Identity.Villager) {
-				int leftIndex = game.getPlayerList().indexOf(player) + 1;
-				if(leftIndex == game.getPlayerList().size()) {
-					leftIndex = 0;
-					Bot chosenPlayer = (Bot)game.getPlayerList().get(leftIndex);
-					System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
-					game.setCurrentPlayer(chosenPlayer);
-					setIsUsed(true);
-				}else {
-					Player chosenPlayer = game.getPlayerList().get(leftIndex);
-					System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
-					game.setCurrentPlayer(chosenPlayer);
-					setIsUsed(true);
-				}
+		if(player.isRevealed() == true) {
+			game.setCurrentPlayer(player);
+			super.isUsed = false;
 			}else {
+				player.revealIdentity();
+				if(player.getIdentity() == Identity.Villager) {
+					int leftIndex = game.getPlayerList().indexOf(player) + 1;
+					if(leftIndex == game.getPlayerList().size()) {
+						leftIndex = 0;
+						Bot chosenPlayer = (Bot)game.getPlayerList().get(leftIndex);
+						System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
+						game.setCurrentPlayer(chosenPlayer);
+						setIsUsed(true);
+					}
+					else {
+						Player chosenPlayer = game.getPlayerList().get(leftIndex);
+						System.out.printf("Player %d chooses the player to his/her left to play next turn\n",player.getPlayerId());
+						game.setCurrentPlayer(chosenPlayer);
+						setIsUsed(true);
+					}
+				if (player.getIdentity() == Identity.Witch) {
 					player.chooseNextPlayer(game);
 					System.out.printf("Player %d takes next turn\n", game.getCurrentPlayer().getPlayerId());
 					setIsUsed(true);
 				}
-			} 
-			else{//hunt depend on nbres of cards
-				  //can't use Hunt! effect return to the step choose action
-				  System.out.println("Your identity has been revealed, you can't use its Hunt! effect");
-				  game.setCurrentPlayer(player);
-				  super.isUsed = false;
-				 }
+		
+				}
+			}
 	}
 
 }
