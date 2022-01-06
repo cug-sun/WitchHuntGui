@@ -33,11 +33,11 @@ public class Player {
 	//if this player is chosen by Evil Eye, id of the player who uses Evil eye
 	private int evilEye;
 	
-	private Image unknownImage = null;
+	public static Image unknownImage = null;
 	
-	private Image witchImage = null;
+	static Image witchImage = null;
 	
-	private Image villagerImage = null;
+	static Image villagerImage = null;
 	
 	public JLabel messageLabel;
 	
@@ -61,7 +61,9 @@ public class Player {
 		
 		this.identityLabel = new JLabel(new ImageIcon(unknownImage));
 		
-		this.scoreLabel = new JLabel(Integer.toString(points));
+		String message = String.format("Points: %d", points);
+		this.scoreLabel = new JLabel(message);
+		
 		
 		this.revealedCardLabel = new JLabel();
 	}
@@ -213,7 +215,8 @@ public class Player {
 	//update player's points in the game
 	public void updatePoints(int points) {
 		this.points += points;
-		scoreLabel.setText(Integer.toString(points));
+		String message = String.format("Points: %d", points);
+		scoreLabel.setText(message);
 	}
 	
 	public int getPoint() {
@@ -225,35 +228,43 @@ public class Player {
 	}
 		
 	public void chooseIdentity() {
-		System.out.printf("Player %d chooses to be a 1.Villager 2.Witch\n",this.getPlayerId());
-		Scanner scanner = new Scanner(System.in);
-		while (true) {
-			try {
-				int identity = scanner.nextInt();
-				if (identity < 1 || identity > 2) {
-					System.out.println("Invalide input! Input again");
-					scanner = new Scanner(System.in);
-				}
-				else {
-					switch (identity) {
-					case 1: {
-						this.setIdentity(Identity.Villager);
-						break;
-					}
-					case 2: {
-						this.setIdentity(Identity.Witch);
-						break;
-					}
-				}
-					break;
-				}
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println("Invalide input! Input again");
-				scanner = new Scanner(System.in);
-			}
-			
-			
+//		System.out.printf("Player %d chooses to be a 1.Villager 2.Witch\n",this.getPlayerId());
+//		Scanner scanner = new Scanner(System.in);
+//		while (true) {
+//			try {
+//				int identity = scanner.nextInt();
+//				if (identity < 1 || identity > 2) {
+//					System.out.println("Invalide input! Input again");
+//					scanner = new Scanner(System.in);
+//				}
+//				else {
+//					switch (identity) {
+//					case 1: {
+//						this.setIdentity(Identity.Villager);
+//						break;
+//					}
+//					case 2: {
+//						this.setIdentity(Identity.Witch);
+//						break;
+//					}
+//				}
+//					break;
+//				}
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//				System.out.println("Invalide input! Input again");
+//				scanner = new Scanner(System.in);
+//			}
+//			
+//			
+//		}
+		String[] options = {"Witch","Villager"};
+		String identity = (String)JOptionPane.showInputDialog(null,"You choose to be", "Identity",JOptionPane.INFORMATION_MESSAGE, null,options,options[0] );
+		if(identity == "Villager") {
+			this.setIdentity(Identity.Villager);
+		}
+		else {
+			this.setIdentity(Identity.Witch);
 		}
 	}
 	

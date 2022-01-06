@@ -27,7 +27,7 @@ public class ConfigPane extends JPanel {
 		this.setLayout(null);
 		startButton = new JButton("New game");
 		exitButton = new JButton("Exit");
-		//按钮凹下或者凸起
+		//按钮凸起或者凹下
 //		startButton.setBorder(BorderFactory.createRaisedBevelBorder());
 //		exitButton.setBorder(BorderFactory.createLoweredBevelBorder());
 		//透明效果

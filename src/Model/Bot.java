@@ -126,6 +126,7 @@ public class Bot extends Player {
 				game.setCurrentPlayer(accusePlayer);
 			}
 		}
+		game.getGamePane().repaint();
 		
 	}
 	

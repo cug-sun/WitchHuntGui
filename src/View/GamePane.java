@@ -89,14 +89,17 @@ public class GamePane extends JPanel {
 		this.setLayout(null);
 		startButton = new JButton("start");
 		infoLabel = new JLabel();
-		startButton.setBounds(100, 700, 100, 30);
+		startButton.setBounds(100, 500, 100, 30);
 		infoLabel.setBounds(700, 300, 200, 30);
 		
 		this.add(startButton);
 		this.add(infoLabel);
 //		System.out.println(mapPlayers.isEmpty());
-		
-		
+		//set human player UI
+		game.getPlayerList().get(0).identityLabel.setBounds(300, 600, 117, 168);
+		this.add(game.getPlayerList().get(0).identityLabel);
+		game.getPlayerList().get(0).scoreLabel.setBounds(300, 500, 50, 100);
+		this.add(game.getPlayerList().get(0).scoreLabel);
 
 		
 		startButton.addActionListener(new ActionListener() {
@@ -105,6 +108,7 @@ public class GamePane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				startButton.setEnabled(false);
+				JOptionPane.showMessageDialog(null, String.format("Start from player %d", game.getCurrentPlayer().getPlayerId()));
 				game.playBot();
 				
 				
@@ -154,6 +158,11 @@ public class GamePane extends JPanel {
 	 @Override
 	 protected void paintComponent(Graphics g) {
 		 super.paintComponent(g);
+		 
+		 //paint background
+//		 ImageIcon img = new ImageIcon("./image/background/background.png");
+//		 img.paintIcon(this, g, 0, 0);
+		 
 		 mapCards.clear();
 		 ArrayList<RumourCard> hand = playerList.get(0).getHand();
 		 int cardHeight = (getHeight() - 20) / 3;
@@ -190,9 +199,9 @@ public class GamePane extends JPanel {
 //        		 g2d.fill(playerBounds);
 //        		 g2d.setColor(Color.WHITE);
 //        		 g2d.draw(playerBounds);
-        		 Graphics2D copy = (Graphics2D) g2d.create();
-        		 paintPlayer(copy, player, playerBounds);
-        		 copy.dispose();
+//        		 Graphics2D copy = (Graphics2D) g2d.create();
+        		 paintPlayer(player, playerBounds);
+//        		 copy.dispose();
         		 
         		 
         	 }
@@ -220,30 +229,15 @@ public class GamePane extends JPanel {
          g2d.drawImage(scaledImage, bounds.x, bounds.y, null);
 
      }
-     protected void paintPlayer(Graphics2D g2d, Player player, Rectangle bounds) {
+     protected void paintPlayer(Player player, Rectangle bounds) {
     	 
-    	 Image unknownImage = null;
-    	 Image witchImage = null;
-    	 Image villagerImage = null;
-    	 
-  		
-    	 try {
-			unknownImage = ImageIO.read(new File("./image/identity/unknown1.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
-			witchImage = ImageIO.read(new File("./image/identity/witch.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
-	    	 villagerImage = ImageIO.read(new File("./image/identity/villager.png")).getScaledInstance(bounds.width, bounds.height,Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-    	 
+    	 player.identityLabel.setBounds(bounds);
 
-    	player.identityLabel.setBounds(bounds);
-
-    	this.add(player.identityLabel);
-  		player.messageLabel.setBounds(bounds.x, bounds.y + bounds.height, 200, 50);
-  		player.scoreLabel.setBounds(bounds.x, bounds.y + bounds.height + 50, 50, 50);
-  		this.add(player.scoreLabel);
-  		this.add(player.messageLabel);
+    	 this.add(player.identityLabel);
+  		 player.messageLabel.setBounds(bounds.x, bounds.y + bounds.height, 200, 50);
+  		 player.scoreLabel.setBounds(bounds.x, bounds.y + bounds.height + 50, 50, 50);
+  		 this.add(player.scoreLabel);
+  		 this.add(player.messageLabel);
      }
      
      

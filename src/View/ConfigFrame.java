@@ -21,13 +21,15 @@ public class ConfigFrame extends JFrame {
 	public ConfigFrame() throws IOException  {
 		// TODO 自动生成的构造函数存根
 //		this.setLayout(null);
+		ImageIcon icon = new ImageIcon("./image/icon/witch-hat.png");
+		this.setIconImage(icon.getImage());
 		this.setTitle("Witch Hunt");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(340,330);
 		//禁止用户缩放
 		this.setResizable(false);
 		buttonPanel = new JPanel();
-		backgroundPanel = new BackgroundPanel((new ImageIcon("./background.png")).getImage());
+		backgroundPanel = new BackgroundPanel((new ImageIcon("./image/background/background.png")).getImage());
 //		backgroundPanel = new BackgroundPanel("./background.png");
 		backgroundPanel.setBounds(0,0,340,330);
 		this.getContentPane().add(backgroundPanel);
