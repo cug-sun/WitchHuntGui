@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import Controller.Game;
 import RumourCards.*;
+import jdk.incubator.foreign.ResourceScope.Handle;
 //import RumourCards.RumourCard;
 //import RumourCards.RumourCardName;
 
@@ -44,6 +45,8 @@ public class Player {
 	
 	public JLabel scoreLabel;
 	
+	public JLabel revealedCardLabel;
+	
 	public Player(int playerId) {
 		loadImage();
 		
@@ -59,6 +62,8 @@ public class Player {
 		this.identityLabel = new JLabel(new ImageIcon(unknownImage));
 		
 		this.scoreLabel = new JLabel(Integer.toString(points));
+		
+		this.revealedCardLabel = new JLabel();
 	}
 	
 	public void loadImage() {
@@ -119,6 +124,7 @@ public class Player {
 		if(this.isIdRevealed == false) {
 			this.isIdRevealed = true;
 			System.out.println("Player "+ this.playerId + "'s identity card is revealed, he/she is a "+ this.identity);
+			JOptionPane.showMessageDialog(null, String.format("Player %d reveals identity card", this.getPlayerId()), null, 1);
 			if(this.identity == Identity.Villager) {
 				identityLabel.setIcon(new ImageIcon(villagerImage));
 			}
@@ -126,7 +132,7 @@ public class Player {
 				identityLabel.setIcon(new ImageIcon(witchImage));
 			} 
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
@@ -149,24 +155,34 @@ public class Player {
 			}
 			System.out.printf("Player %d\n", player.getPlayerId());
 		}
-		Scanner scanner = new Scanner(System.in);
-		boolean correct = true;
-		Player choosedPlayer;
-		do {
-			int choosedId = scanner.nextInt();
-			choosedPlayer = game.findPlayer(choosedId);
-			if (choosedPlayer != null) {
-				correct = false;
-				
-			}
-			else {
-				System.out.println("Invalide input! Input a correct playerId");
-				correct = true;
-			}
-		} while (correct);
+		ArrayList<Integer> idList = new ArrayList<Integer>();
+		for(int i = 1; i < game.getPlayerList().size(); i++) {
+			Player player = game.getPlayerList().get(i);
+			
+			idList.add(player.getPlayerId());
+			
+		}
+		Object[] options = idList.toArray();
+		int chosenId = (int) JOptionPane.showInputDialog(null, "player", "Choose next player", 1, null, options, options[0]);
+		Player chosenPlayer = game.findPlayer(chosenId);
+//		Scanner scanner = new Scanner(System.in);
+//		boolean correct = true;
+//		Player choosedPlayer;
+//		do {
+//			int choosedId = scanner.nextInt();
+//			choosedPlayer = game.findPlayer(choosedId);
+//			if (choosedPlayer != null) {
+//				correct = false;
+//				
+//			}
+//			else {
+//				System.out.println("Invalide input! Input a correct playerId");
+//				correct = true;
+//			}
+//		} while (correct);
 		
-		System.out.printf("You choose player %d to play next turn\n", choosedPlayer.getPlayerId());
-		game.setCurrentPlayer(game.findPlayer(choosedPlayer.getPlayerId()));
+		System.out.printf("You choose player %d to play next turn\n", chosenPlayer.getPlayerId());
+		game.setCurrentPlayer(chosenPlayer);
 	}
 	
 	public void discard(Game game) {
@@ -176,10 +192,18 @@ public class Player {
 				System.out.printf("%d. %s\n", hand.indexOf(rumourCard)+1, rumourCard.getCardName().toString() );
 			}
 			System.out.println("Which card will you discard ?");
-			Scanner scanner = new Scanner(System.in);
-			RumourCard discarded = hand.remove(scanner.nextInt()-1);
-			System.out.println("You discard " + discarded.getCardName().toString());
-			game.discardPile.add(discarded);
+			ArrayList<String> cardList = new ArrayList<String>();
+			for (RumourCard card: hand) {
+				cardList.add(card.getCardName().toString());
+			}
+			Object[] options = cardList.toArray();
+			int chosenIndex = (int) JOptionPane.showInputDialog(null, "You discard", "You have these cards", 1, null, options, options[0]);
+			RumourCard chosenCard = hand.get(chosenIndex);
+			
+			System.out.println("You discard " + chosenCard.getCardName().toString());
+			hand.remove(chosenIndex);
+			game.discardPile.add(chosenCard);
+			game.getGamePane().repaint();
 		}
 		else {
 			System.out.println("This player doesn't have any card in hand");
@@ -253,11 +277,40 @@ public class Player {
 			case 0: {
 				
 				revealIdentity();
-			}
-			case 1:{
 				break;
 			}
+			case 1:{
+				game.setCurrentPlayer(this);
+				System.out.println("You choose to reveal a Rumour card from you hand and resolving its Witch? effect");
+				System.out.println("You have these Rumour cards in your hand, which one do you want to use ?");
+				this.displayHand();
+				ArrayList<String> cardList = new ArrayList<String>();
+				for (RumourCard card: hand) {
+					cardList.add(card.getCardName().toString());
+				}
+				Object[] options = cardList.toArray();
+				String chosenCarName = (String)JOptionPane.showInputDialog(null, "You choose", "You have these cards", 1, null, options, options[0]);
+				RumourCard chosenCard = null;
+				for(RumourCard card: hand) {
+					if(card.getCardName().toString() == chosenCarName) {
+						chosenCard = card;
+					}
+				}
+				System.out.printf("You choose to use %s\n",chosenCard.getCardName().toString());
+				chosenCard.witchEffect(game);
+				//add this card to revealed card pile
+				if(chosenCard.getIsUsed() == true) {
+					hand.remove(chosenCard);
+					revealedCards.add(chosenCard);
+					game.getGamePane().repaint();
+				}
+				else {
+					this.beAccused(game);
+				}
+
+				break;
 			}
+		}
 //			Scanner scanner = new Scanner(System.in);
 //			switch (scanner.nextInt()) {
 //			case 1: {
@@ -303,6 +356,7 @@ public class Player {
 		}
 		else {
 			System.out.println("You don't have any card in your hand, you must reveal your identity card");
+			JOptionPane.showMessageDialog(null, "You don't have any card in your hand, you must reveal your identity card", null, 1);
 			this.revealIdentity();
 		}
 		
@@ -318,6 +372,17 @@ public class Player {
 			}
 		}
 		return broomstick;
+	}
+	
+	public boolean haveWart() {
+		boolean wart = false;
+		for(RumourCard rumourCard : revealedCards) {
+			if (rumourCard.getCardName() == RumourCardName.Wart) {
+				wart = true;
+				break;
+			}
+		}
+		return wart;
 	}
 	
 	public boolean existRevealedCard(RumourCardName cardName) {
@@ -487,8 +552,13 @@ public class Player {
 				cardList.add(card.getCardName().toString());
 			}
 			Object[] options = cardList.toArray();
-			int chosenIndex = (int) JOptionPane.showInputDialog(null, "You choose", "You have these cards", 1, null, options, options[0]);
-			RumourCard chosenCard = hand.get(chosenIndex);
+			String chosenCarName = (String)JOptionPane.showInputDialog(null, "You choose", "You have these cards", 1, null, options, options[0]);
+			RumourCard chosenCard = null;
+			for(RumourCard card: hand) {
+				if(card.getCardName().toString() == chosenCarName) {
+					chosenCard = card;
+				}
+			}
 			System.out.printf("You choose to use %s\n",chosenCard.getCardName().toString());
 			chosenCard.huntEffect(game);
 			if (chosenCard.getIsUsed() == true) {
@@ -500,12 +570,11 @@ public class Player {
 			else {
 				this.getRevealedCards().add(chosenCard);
 			}
-			
+			game.getGamePane().invalidate();
 			break;
 			}
 		}
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + choice);
+		
 		}
 	}
 }

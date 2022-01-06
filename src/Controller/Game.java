@@ -246,13 +246,16 @@ public class Game {
 					scoreBoard();
 					System.out.println("\nStart new round...\n");
 					gamePane.setInfoLabel("Start new round...");
+					JOptionPane.showMessageDialog(null, "Start new round...");
 					chooseIdentity();
 					System.out.printf("Start from player %d, who was last to reveal his/her identity in the previous round\n",currentPlayer.getPlayerId());
+					JOptionPane.showMessageDialog(null, String.format("Start from player %d, who was last to reveal his/her identity in the previous round\n",currentPlayer.getPlayerId()), null, 1);
 					for (Player player : playerList) {
 						player.getHand().clear();
 						player.getRevealedCards().clear();
 						player.setEvilEye(0);
 						player.setIsRevealed(false);
+						setIdentity();
 					}
 					initPile();
 					distribute();
@@ -466,6 +469,7 @@ public class Game {
 		}
 		if (nUnrevealedPlayer == 1) {
 			System.out.printf("This round ends, player %d remains with a unrevealed identity card, he/she wins the round\n",roundWinner.getPlayerId());
+			JOptionPane.showMessageDialog(null, String.format("This round ends, player %d remains with a unrevealed identity card, he/she wins the round\n", roundWinner.getPlayerId()), null, 1);
 			if(roundWinner.getIdentity() == Identity.Villager) {
 				System.out.println("He/She is a Villager, gains 1 point");
 				roundWinner.updatePoints(1);
@@ -496,6 +500,7 @@ public class Game {
 			}
 			if(winner.size() == 1) {
 				System.out.printf("Game ends, player %d wins, he/she has %d points\n",max.getPlayerId(),max.getPoint());
+				JOptionPane.showMessageDialog(null, String.format("Game ends, player %d wins, he/she has %d points\n", max.getPlayerId(),max.getPoint()), null, 1);
 			}
 			else {
 				System.out.print("Game ends, but it is tied, then players will have a high-stakes “monkey knife fight” and duel to the death. The survivor wins.\n");
@@ -506,6 +511,7 @@ public class Game {
 				System.out.println("Playing...");
 				Player survivor = winner.get((int)(Math.random() * (winner.size())));
 				System.out.printf("Survivor is player %d! he/she wins, he/she has %d points\n",survivor.getPlayerId(),survivor.getPoint());
+				JOptionPane.showMessageDialog(null, String.format("Game ends, player %d wins, he/she has %d points\n", max.getPlayerId(),max.getPoint()), null, 1);
 			}
 			
 			
@@ -618,7 +624,7 @@ public class Game {
 	
 	public void hangOn() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();

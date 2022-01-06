@@ -41,8 +41,6 @@ public class ConfigPane extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				Game model = new Game();
-				model.getAccuse()[0] = 2;
-				model.getAccuse()[1] = 3;
 				GameFrame gameFrame = new GameFrame(model);
 				
 

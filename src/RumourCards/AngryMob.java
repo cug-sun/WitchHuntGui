@@ -1,6 +1,9 @@
 package RumourCards;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import Model.Bot;
 import Controller.Game;
@@ -26,6 +29,7 @@ public class AngryMob extends RumourCard {
 		// TODO 自动生成的方法存根
 		//take next turn
 		System.out.println("You will take next turn");
+		JOptionPane.showMessageDialog(null,"You will play next turn","info",1);
 		game.setCurrentPlayer(game.getCurrentPlayer());
 		setIsUsed(true);
 	}
@@ -36,43 +40,56 @@ public class AngryMob extends RumourCard {
 		Player player = game.getCurrentPlayer();
 		//Only playable if you have been revealed as a villager
 		if(player.isRevealed() == true && player.getIdentity() == Identity.Villager) {
-			//reveal another player's identity
-			Scanner scanner = new Scanner(System.in);
-			System.out.println("You can reveal another player's identity\nInput the player's id");
-			int choosedId = scanner.nextInt();
-			Player chosenPlayer = game.findPlayer(choosedId);
-			//when a player has a revealed Broomstick, he/she can't be chosen by Angry Mob
-			boolean broomStick = false;
-			for (RumourCard card : chosenPlayer.getRevealedCards()) {
-				if(card.getCardName() == RumourCardName.Broomstick) {
-					broomStick = true;
-					break;
-				}	
-			}
 			
-			if(broomStick) {
-				System.out.printf("Player %d has a revealed Broomstick, he/she can't be chosen by Angry Mob!\n",chosenPlayer.getPlayerId());
-				game.setCurrentPlayer(player);
-				setIsUsed(false);
+			ArrayList<Integer> idList = new ArrayList<Integer>();
+			for(int i = 1; i < game.getPlayerList().size(); i++) {
+				Player p = game.getPlayerList().get(i);
+				if (p.haveBroomstick() == false) {
+					idList.add(p.getPlayerId());
+				}
 			}
-			else {
+			Object[] options = idList.toArray();
+			int chosenId = (int)JOptionPane.showInputDialog(null, "player", "Broomstick", 1, null, options, options[0]);
+			//reveal another player's identity
+//			Scanner scanner = new Scanner(System.in);
+//			System.out.println("You can reveal another player's identity\nInput the player's id");
+//			int chosenId = scanner.nextInt();
+			Player chosenPlayer = game.findPlayer(chosenId);
+			//when a player has a revealed Broomstick, he/she can't be chosen by Angry Mob
+//			boolean broomStick = false;
+//			for (RumourCard card : chosenPlayer.getRevealedCards()) {
+//				if(card.getCardName() == RumourCardName.Broomstick) {
+//					broomStick = true;
+//					break;
+//				}	
+//			}
+			
+//			if(broomStick) {
+//				System.out.printf("Player %d has a revealed Broomstick, he/she can't be chosen by Angry Mob!\n",chosenPlayer.getPlayerId());
+//				game.setCurrentPlayer(player);
+//				setIsUsed(false);
+//			}
+//			else {
 				chosenPlayer.revealIdentity();
 				//calculate point
 				if (chosenPlayer.getIdentity() == Identity.Villager) {
 					System.out.println("You lose 2 pts, the player whose identity card you reveal plays the next turn");
+					JOptionPane.showMessageDialog(null,String.format("You lose 2 pts, player %d plays next turn", chosenId),"Broomstick",1);
 					player.updatePoints(-2);
 					game.setCurrentPlayer(chosenPlayer);
 				}
 				else if (chosenPlayer.getIdentity() == Identity.Witch) {
 					System.out.println("You gain 2 pts, you take next turn");
+					JOptionPane.showMessageDialog(null,"You gain 2 pts, you take next turn","Broomstick",1);
 					player.updatePoints(2);
 					game.setCurrentPlayer(player);
 				}
 				setIsUsed(true);
-			}		
+//			}		
 		}
 		else {
 			System.out.println(this.getCardName() + " is only playable if you have been revealed as a villager");
+			JOptionPane.showMessageDialog(null,"Broomstick is only playable if you have been revealed as a villager","Broomstick",0);
 			setIsUsed(false);
 		}
 	}
