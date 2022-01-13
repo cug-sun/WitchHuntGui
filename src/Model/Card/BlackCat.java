@@ -1,5 +1,7 @@
-package RumourCards;
+package Model.Card;
 
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 import java.util.ArrayList;
 import java.util.Scanner;
 

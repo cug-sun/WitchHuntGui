@@ -1,9 +1,10 @@
-package RumourCards;
+package Model.Card;
 
 import Model.Bot;
 
 import javax.swing.JOptionPane;
-
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 import Controller.Game;
 import Model.Identity;
 import Model.Player;

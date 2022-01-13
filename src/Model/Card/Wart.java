@@ -1,9 +1,10 @@
-package RumourCards;
+package Model.Card;
 
 import Model.Bot;
 
 import javax.swing.JOptionPane;
-
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
@@ -37,7 +38,7 @@ public class Wart extends RumourCard {
 		// TODO 自动生成的方法存根
 		Player player = game.getCurrentPlayer();
 		System.out.println("Choose a player to play next turn");
-		JOptionPane.showMessageDialog(null,"You will take next turn","Wart",1);
+		JOptionPane.showMessageDialog(null,"Choose a player to play next turn","Wart",1);
 		player.chooseNextPlayer(game);
 		setIsUsed(true);
 

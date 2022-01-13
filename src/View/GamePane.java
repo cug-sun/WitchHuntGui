@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 
 
 
-import RumourCards.RumourCard;
+import Model.CardModel.RumourCard;
 import Controller.Game;
 import Model.Identity;
 import Model.Player;

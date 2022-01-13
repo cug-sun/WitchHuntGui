@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import Controller.Game;
-import RumourCards.RumourCard;
+import Model.CardModel.RumourCard;
 
 
 public class Bot extends Player {
@@ -110,6 +110,7 @@ public class Bot extends Player {
 				accusePlayer.updatePoints(1);
 				game.setCurrentPlayer(accusePlayer);
 			}
+			game.getGamePane().repaint();
 		}
 		else {
 			System.out.printf("Player %d chooses to reveal identity card\n", this.getPlayerId());
@@ -125,8 +126,9 @@ public class Bot extends Player {
 				accusePlayer.updatePoints(1);
 				game.setCurrentPlayer(accusePlayer);
 			}
+			game.getGamePane().repaint();
 		}
-		game.getGamePane().repaint();
+		
 		
 	}
 	

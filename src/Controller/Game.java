@@ -19,20 +19,22 @@ import javax.swing.JOptionPane;
 import Model.Bot;
 import Model.Player;
 import Model.Identity;
-import RumourCards.AngryMob;
-import RumourCards.BlackCat;
-import RumourCards.Broomstick;
-import RumourCards.Pauldron;
-import RumourCards.DuckingStool;
-import RumourCards.EvilEye;
-import RumourCards.HookedNose;
-import RumourCards.PetNewt;
-import RumourCards.PointedHat;
-import RumourCards.RumourCard;
-import RumourCards.RumourCardName;
-import RumourCards.TheInquisition;
-import RumourCards.Toad;
-import RumourCards.Wart;
+
+import Model.Card.AngryMob;
+import Model.Card.BlackCat;
+import Model.Card.Broomstick;
+import Model.Card.DuckingStool;
+import Model.Card.EvilEye;
+import Model.Card.HookedNose;
+import Model.Card.Pauldron;
+import Model.Card.PetNewt;
+import Model.Card.PointedHat;
+import Model.Card.TheInquisition;
+import Model.Card.Toad;
+import Model.Card.Wart;
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
+
 import View.GamePane;
 
 
@@ -227,7 +229,7 @@ public class Game {
 		
 		while(true) {
 			currentPlayer.playTurn(this);
-//			gamePane.repaint();
+			gamePane.repaint();
 			hangOn();
 			
 			
@@ -245,7 +247,7 @@ public class Game {
 						public int compare(Player p1, Player p2) {
 						    return Integer.compare(p1.getPlayerId(), p2.getPlayerId());
 						};
-					});	
+					});	 
 					//score board
 					scoreBoard();
 					System.out.println("\nStart new round...\n");
@@ -262,6 +264,8 @@ public class Game {
 						player.chooseIdentity();
 						
 						player.identityLabel.setIcon(new ImageIcon(Player.unknownImage));
+						
+					
 					}
 					initPile();
 					distribute();
@@ -301,10 +305,12 @@ public class Game {
 			if(roundWinner.getIdentity() == Identity.Villager) {
 				System.out.println("He/She is a Villager, gains 1 point");
 				roundWinner.updatePoints(1);
+				gamePane.repaint();
 			}
 			else if (roundWinner.getIdentity() == Identity.Witch) {
 				System.out.println("He/She is a Witch, gains 2 point");
 				roundWinner.updatePoints(2);
+				gamePane.repaint();
 			}
 			setCurrentPlayer(roundWinner);
 			return true;

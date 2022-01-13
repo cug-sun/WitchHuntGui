@@ -1,4 +1,4 @@
-package RumourCards;
+package Model.Card;
 
 import Model.Bot;
 
@@ -7,7 +7,8 @@ import javax.swing.JOptionPane;
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
-
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 
 public class EvilEye extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Evil_Eye;

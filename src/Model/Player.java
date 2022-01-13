@@ -11,7 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import Controller.Game;
-import RumourCards.*;
+import Model.Card.*;
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 import jdk.incubator.foreign.ResourceScope.Handle;
 //import RumourCards.RumourCard;
 //import RumourCards.RumourCardName;
@@ -288,6 +290,23 @@ public class Player {
 			case 0: {
 				
 				revealIdentity();
+				switch (this.identity) {
+				case Villager: {
+					System.out.printf("Player %d is a villager, player %d gains no point, player %d will play next turn\n",
+					this.getPlayerId(),accusePlayer.getPlayerId(),this.getPlayerId());
+					accusePlayer.updatePoints(0);
+					game.setCurrentPlayer(accusedPlayer);
+					break;
+					}
+				case Witch: {
+					System.out.printf("Player %d is a witch, player %d gains 1 point, player %d will play next turn\n",
+					this.getPlayerId(),accusePlayer.getPlayerId(),accusePlayer.getPlayerId());
+					accusePlayer.updatePoints(1);
+					game.setCurrentPlayer(accusePlayer);
+					break;
+					}
+				
+				}
 				break;
 			}
 			case 1:{

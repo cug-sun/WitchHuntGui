@@ -1,4 +1,4 @@
-package RumourCards;
+package Model.Card;
 
 import Model.Bot;
 
@@ -7,7 +7,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
-
+import Model.CardModel.RumourCard;
+import Model.CardModel.RumourCardName;
 import Controller.Game;
 import Model.Identity;
 import Model.Player;
