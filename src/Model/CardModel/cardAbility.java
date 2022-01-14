@@ -1,6 +1,15 @@
 package Model.CardModel;
 
 import Controller.Game;
+/**
+ * <p>projectname: ${WitchHunt!} </p> 
+ * <p>Cette classe est utilisée pour contrôler les effets des cartes.</p> 
+ *
+ * @author SUN Sun 
+ * @author ZHANG xiao
+ * @version v1.0
+ * 
+ */
 
 public interface cardAbility {
 	RumourCardName getCardName();
