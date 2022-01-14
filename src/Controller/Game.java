@@ -89,10 +89,7 @@ public class Game {
 		
 	}
 	
-	public void test() {
-		gamePane.getInfoLabel().setText("good luck");
-		currentPlayer.setMessageLabel("fuck you");
-	}
+	
 	
 	public void shuffleCard() {
 		System.out.println("Shuffle rumour cards...");

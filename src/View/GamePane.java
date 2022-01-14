@@ -2,26 +2,16 @@ package View;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,26 +21,46 @@ import javax.swing.JPanel;
 
 import Model.CardModel.RumourCard;
 import Controller.Game;
-import Model.Identity;
+
 import Model.Player;
 
 
-
+/**
+ * The main component of {@link View.GameFrame}.
+ * <p>
+ * Inherits the super class {@link JPanel}.
+ * @author Sun
+ *
+ */
 public class GamePane extends JPanel {
+	/**
+	 * @see Controller.Game.
+	 */
 	private Game game;
 	
 	private ArrayList<Player> playerList;
-	
+	/**
+	 * Each entry contains a reference of hand and its location.
+	 * <p>
+	 * Calculates locations based on window size and number of hands
+	 */
 	private HashMap<RumourCard, Rectangle> mapCards;
-	
+	/**
+	 * Each entry contains a reference of player and its location.
+	 * <p>
+	 * Calculates locations based on window size and number of hands
+	 */
 	private HashMap<Player, Rectangle> mapPlayers;
-	
-	private RumourCard selected;
 	
 	private JLabel infoLabel;
 	
 	private JButton startButton;
 	
+	/**
+	 * Initializes the {@code GamePane}.
+	 * 
+	 * @param game The controller {@link Controller.Game}
+	 */
 	public GamePane(Game game) {
 		// TODO 自动生成的构造函数存根
 		
@@ -58,33 +68,11 @@ public class GamePane extends JPanel {
 		this.playerList = game.getPlayerList();
 		mapCards = new HashMap<>(playerList.get(0).getHand().size()*2);
 		mapPlayers = new HashMap<>(playerList.size() * 2);
-		
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (selected != null) {
-                    Rectangle bounds = mapCards.get(selected);
-                    bounds.y += 20;
-                    repaint();
-                }
-				
-				selected = null;
-				
-				for (RumourCard card : playerList.get(0).getHand()) {
-                    Rectangle bounds = mapCards.get(card);
-                    if (bounds.contains(e.getPoint())) {
-                        selected = card;
-                        bounds.y -= 20;
-                        repaint();
-                        break;
-                    }
-                }
-			}
-		});
-		
 		initComponent();
 	}
-	
+	/**
+	 * Initializes the components
+	 */
 	public void initComponent() {
 		this.setLayout(null);
 		startButton = new JButton("start");
@@ -94,7 +82,6 @@ public class GamePane extends JPanel {
 		
 		this.add(startButton);
 		this.add(infoLabel);
-//		System.out.println(mapPlayers.isEmpty());
 		//set human player UI
 		game.getPlayerList().get(0).identityLabel.setBounds(300, 600, 117, 168);
 		this.add(game.getPlayerList().get(0).identityLabel);
@@ -120,11 +107,10 @@ public class GamePane extends JPanel {
 		game.setGamePane(this);
 	}
 	
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(400,400);
-	}
 	
+	/**
+	 * Initializes the fields {@code mapCards} and {@code mapPlayers}.
+	 */
 	 @Override
      public void invalidate() {
          super.invalidate();
@@ -155,14 +141,12 @@ public class GamePane extends JPanel {
         }
          
      }
+	 /**
+	  * Paints the card and player areas with {@link Graphics}.
+	  */
 	 @Override
 	 protected void paintComponent(Graphics g) {
 		 super.paintComponent(g);
-		 
-		 //paint background
-//		 ImageIcon img = new ImageIcon("./image/background/background.png");
-//		 img.paintIcon(this, g, 0, 0);
-		 
 		 mapCards.clear();
 		 ArrayList<RumourCard> hand = playerList.get(0).getHand();
 		 int cardHeight = (getHeight() - 20) / 3;
@@ -179,10 +163,9 @@ public class GamePane extends JPanel {
          Graphics2D g2d = (Graphics2D) g.create();
          for (RumourCard card : hand) {
              Rectangle bounds = mapCards.get(card);
-//             System.out.println(bounds);
+
              if (bounds != null) {
-//                 g2d.setColor(Color.WHITE);
-//                 g2d.fill(bounds);
+
                  g2d.setColor(Color.WHITE);
                  g2d.draw(bounds);
                  Graphics2D copy = (Graphics2D) g2d.create();
@@ -195,40 +178,35 @@ public class GamePane extends JPanel {
          for(Player player : playerList) {
         	 Rectangle playerBounds = mapPlayers.get(player);
         	 if(playerBounds != null) {
-//        		 g2d.setColor(Color.WHITE);
-//        		 g2d.fill(playerBounds);
-//        		 g2d.setColor(Color.WHITE);
-//        		 g2d.draw(playerBounds);
-//        		 Graphics2D copy = (Graphics2D) g2d.create();
-        		 paintPlayer(player, playerBounds);
-//        		 copy.dispose();
-        		 
-        		 
+
+        		 paintPlayer(player, playerBounds);        		 
         	 }
          }
 
          g2d.dispose();
      }
-
+	 /**
+	  * Paint player's hands in the {@code panel}.
+	  * <p>
+	  * Scales back the image of {@code Rumour card} and call {@code drawImage()} to draw it.
+	  * @param g2d reference of {@link Graphics2D} of this {@code panel}
+	  * @param card reference of {@link RumourCard}
+	  * @param bounds object of {@link Rectangle} indicating the location of this card
+	  */
      protected void paintCard(Graphics2D g2d, RumourCard card, Rectangle bounds) {
-         //Translates the origin of the graphics context to the point (x, y) in the current coordinate system
-//    	 g2d.translate(bounds.x + 5, bounds.y + 5);
-//         g2d.setClip(0, 0, bounds.width - 5, bounds.height - 5);
-//         
-//         String text = card.getCardName().toString();
-//         FontMetrics fm = g2d.getFontMetrics();
-//         g2d.drawString(text, 0, fm.getAscent());
-         
+
          //draw card image
          Image image = card.getCardImage();
-//         BufferedImage buffered = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-//         Graphics2D g = buffered.createGraphics();
-//         g.drawImage(image, 0, 0, null);
-         
+
          Image scaledImage = image.getScaledInstance(bounds.width, bounds.height, Image.SCALE_SMOOTH);
          g2d.drawImage(scaledImage, bounds.x, bounds.y, null);
 
      }
+     /**
+      * Paint player's area in the {@code panel}.
+      * @param player reference of a {@code Player} object
+      * @param bounds location of this player area in the {@code panel}
+      */
      protected void paintPlayer(Player player, Rectangle bounds) {
     	 
     	 player.identityLabel.setBounds(bounds);
@@ -242,11 +220,17 @@ public class GamePane extends JPanel {
      
      
      
-     
+     /**
+      * Gets the {@code infoLabel}.
+      * @return reference of {@code infoLabel}
+      */
      public JLabel getInfoLabel() {
     	 return infoLabel;
      }
-     
+     /**
+      * Sets the {@code infoLabel}.
+      * @param text the string text to display
+      */
      public void setInfoLabel(String text) {
     	 infoLabel.setText(text);
      }

@@ -14,7 +14,6 @@ import Controller.Game;
 import Model.Card.*;
 import Model.CardModel.RumourCard;
 import Model.CardModel.RumourCardName;
-import jdk.incubator.foreign.ResourceScope.Handle;
 //import RumourCards.RumourCard;
 //import RumourCards.RumourCardName;
 

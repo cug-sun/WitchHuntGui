@@ -1,20 +1,22 @@
 package View;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import Controller.Game;
-
+/**
+ * The main frame of the game window.
+ * <p>
+ * Inherits the super class {@code JFrame}.
+ * @author Sun
+ *
+ */
 public class GameFrame extends JFrame {
 
 	GamePane gamePane = null;
 	
 	
 	
-	public GameFrame(Game model) {
+	public GameFrame(Game game) {
 		// TODO 自动生成的构造函数存根
 		this.setTitle("Witch Hunt");
 		
@@ -31,7 +33,7 @@ public class GameFrame extends JFrame {
 //		backgroundLabel.setBounds(0, 0, 950, 650);
 //		this.getContentPane().add(backgroundLabel);
 		
-		gamePane = new GamePane(model);
+		gamePane = new GamePane(game);
 		//set game panel
 		this.getContentPane().add(gamePane);
 		
