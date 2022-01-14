@@ -1,33 +1,31 @@
 package Model;
 
-/**
- * Classes qui contrôlent les robots。
- * <p>
- * 
- */
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
 import Controller.Game;
 import Model.CardModel.RumourCard;
 
-
+/**
+ * Inherits from {@link Player} and overrides bot's behavior.
+ * 
+ * @see Player
+ */
 public class Bot extends Player {
 
 	
-	
+	/**
+	 * Inherits from super class
+	 * @param playerId
+	 */
 	public Bot(int playerId) {
 		super(playerId);
 		// TODO 自动生成的构造函数存根
 		
 	}
-	
+	/**
+	 * Bot randomly chooses its identity.
+	 */
 	@Override
-	//randomly choose identity
 	public void chooseIdentity() {
 		double seed = Math.random();
 		if (seed < 0.5) {
@@ -39,7 +37,9 @@ public class Bot extends Player {
 			System.out.printf("Player %d chooses to be a Villager\n", this.getPlayerId());
 		}
 	}
-	
+	/**
+	 * Bot randomly chooses a player to play next turn.
+	 */
 	@Override
 	public void chooseNextPlayer(Game game) {
 		Player chosenPlayer = null;
@@ -49,9 +49,10 @@ public class Bot extends Player {
 		game.setCurrentPlayer(chosenPlayer);
 		System.out.printf("Player %d chooses player %d to play next turn\n", this.getPlayerId(),chosenPlayer.getPlayerId());
 	}
-	
+	/**
+	 * Bot randomly discards a card from his hand.
+	 */
 	@Override
-	//randomly discard
 	public void discard(Game game) {
 		int index = (int) (Math.random() * (this.hand.size()));
 		RumourCard chosenCard = this.hand.get(index);
@@ -59,7 +60,11 @@ public class Bot extends Player {
 		setMessageLabel(String.format("discard %s", chosenCard.getCardName().toString()));
 		this.hand.remove(index);
 	}
-	//choose randomly another player
+	/**
+	 * Bot randomly chooses another player.
+	 * @param game reference of {@link Game}
+	 * @return reference of a player
+	 */
 	public Player randomChoose(Game game) {
 		Player chosenPlayer = null;
 		do {
@@ -67,7 +72,9 @@ public class Bot extends Player {
 		} while (chosenPlayer == this);
 		return chosenPlayer;
 	}
-	
+	/**
+	 * Bot randomly accuses another player of being a {@code Witch}
+	 */
 	@Override
 	public void playTurn(Game game) {
 		/* choose whether to accuse or use hunt! effect
@@ -94,7 +101,9 @@ public class Bot extends Player {
 		}
 		
 	}
-	
+	/**
+	 * When bot is accused, it choose to reveal identity card.
+	 */
 	@Override
 	public void beAccused(Game game) {
 		Player accusePlayer = game.findPlayer(game.getAccuse()[0]);
@@ -138,9 +147,13 @@ public class Bot extends Player {
 	}
 	
 
-	
-	//iterate playerList, return an instance of Player if there is a player whose identity card is not revealed
-	//consider card evil eye
+	/**
+	 * Iterates {@code playerList} find a accusable player.
+	 * <p>
+	 * Considers the situation when {@code Evil Eye} is used.
+	 * @param game reference of {@code Game}
+	 * @return reference of chosen player
+	 */
 	public Player accusable(Game game) {
 		boolean accusable = false;
 		Player chosenPlayer = null;
