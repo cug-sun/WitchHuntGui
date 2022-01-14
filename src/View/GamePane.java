@@ -29,8 +29,7 @@ import Model.Player;
  * The main component of {@link View.GameFrame}.
  * <p>
  * Inherits the super class {@link JPanel}.
- * @author SUN Sun
- *
+ * @author SUN Sun 
  */
 public class GamePane extends JPanel {
 	/**

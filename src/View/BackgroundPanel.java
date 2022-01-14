@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * The component of {@link View.ConfigFrame} to show background image in the start window.
  * <p>
  * Inherits the superclass {@code JPanel}.
- * @author SUN Sun
+ * @author SUN Sun 
  *
  */
 public class BackgroundPanel extends JPanel {

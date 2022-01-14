@@ -8,7 +8,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import View.ConfigFrame;
 
-
+/**
+ * WitchHunt! est Un jeu de cartes,Les joueurs choisissent leur identité et utilisent leurs mains. 
+ * Le premier à obtenir cinq points gagne.
+ * <p>
+ *
+ * @author SUN Sun 
+ * @author ZHANG xiao
+ * @version v1.0
+ * 
+ */
 
 
 public class Main {

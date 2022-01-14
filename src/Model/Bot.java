@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * Classes qui contrôlent les robots。
+ * <p>
+ * 
+ */
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;

@@ -7,8 +7,7 @@ import Controller.Game;
  * The main frame of the game window.
  * <p>
  * Inherits the super class {@code JFrame}.
- * @author SUN Sun
- *
+ * @author SUN Sun 
  */
 public class GameFrame extends JFrame {
 

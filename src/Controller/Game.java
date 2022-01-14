@@ -27,20 +27,24 @@ import View.GamePane;
 
 
 /**
- * Game control class.
+ * Classe de contrôle du jeu.
  * <p>
- * Controls card distributing and game process.
- * @author SUN Sun
+ * Contrôle la distribution des cartes et le processus de jeu.
+ * @author SUN Sun 
+ * 
+ */
+
+/**
+ * @see Player
+ * @see Pile
+ * @see Main
  *
  */
 public class Game {
 	/**
-	 * Card pile.
-	 */
+	 * Card pile.*/
 	private ArrayList<RumourCard> cardPile;
-	/**
-	 * Discard pile.
-	 */
+	/**Discard pile.*/
 	public ArrayList<RumourCard> discardPile;
 	/**
 	 * Player number, initialized at the start of game.

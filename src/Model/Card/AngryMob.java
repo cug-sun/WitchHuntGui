@@ -1,4 +1,13 @@
 package Model.Card;
+/**
+ * Stratégie de la carte AngryMob.
+ * <p>
+ * L'effet de Witch est de continuer le prochain tour.
+ * L'effet de chasse ne peut être utilisé que si l'identité est révélée comme étant celle d'un villageois, 
+ * révélant la carte d'identité d'une autre personne et marquant des points en fonction de son identité.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,13 +27,17 @@ public class AngryMob extends RumourCard {
 		super();
 		// TODO 自动生成的构造函数存根
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 自动生成的方法存根
 		return cardName;
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -34,7 +47,9 @@ public class AngryMob extends RumourCard {
 		game.setCurrentPlayer(game.getCurrentPlayer());
 		setIsUsed(true);
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -94,7 +109,9 @@ public class AngryMob extends RumourCard {
 			setIsUsed(false);
 		}
 	}
-	
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -102,7 +119,9 @@ public class AngryMob extends RumourCard {
 		game.setCurrentPlayer(game.getCurrentPlayer());
 		setIsUsed(true);
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的方法存根
