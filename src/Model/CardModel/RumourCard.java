@@ -19,6 +19,11 @@ public abstract class RumourCard implements cardAbility {
 	//if this card is used successfully
 	protected boolean isUsed;
 	protected Image cardImage;
+	
+	/**
+	 * Obtenir le nom de la carte
+	 * @return cardName
+	 */
 	public RumourCard() {
 		this.isUsed = false;
 	}

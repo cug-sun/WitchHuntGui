@@ -1,4 +1,13 @@
 package Model.Card;
+/**
+ * Stratégie de la carte BlackCat.
+ * <p>
+ * L'effet de Witch est de continuer le prochain tour.
+ * L'effet de village est gagnez une carte et continuez pendant un tour.
+ * Inherits the super class {@code RumourCard}.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 
 import Model.CardModel.RumourCard;
 import Model.CardModel.RumourCardName;
@@ -19,13 +28,17 @@ public class BlackCat extends RumourCard {
 		super();
 		// TODO 自动生成的构造函数存根
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 自动生成的方法存根
 		return cardName;
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -34,7 +47,9 @@ public class BlackCat extends RumourCard {
 		setIsUsed(true);
 
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -79,7 +94,9 @@ public class BlackCat extends RumourCard {
 
 
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -87,7 +104,9 @@ public class BlackCat extends RumourCard {
 		game.setCurrentPlayer(game.getCurrentPlayer());
 		setIsUsed(true);
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的方法存根

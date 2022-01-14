@@ -1,6 +1,15 @@
 package Model.Card;
 
 import Model.Bot;
+/**
+ * Stratégie de la carte EvilEye.
+ * <p>
+ * L'effet de Witch est choisie un joueur qui doit accuser un autre joueur si possible.
+ * L'effet de village est choisie un joueur qui doit accuser un autre joueur si possible.
+ * Inherits the super class {@code RumourCard}.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 
 import javax.swing.JOptionPane;
 

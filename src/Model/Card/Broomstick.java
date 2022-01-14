@@ -1,6 +1,15 @@
 package Model.Card;
 
 import Model.Bot;
+/**
+ * Stratégie de la carte Broomstick.
+ * <p>
+ * L'effet de Witch est de continuer le prochain tour.
+ * L'effet de village est sélectionne un autre joueur.
+ * Inherits the super class {@code RumourCard}.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 
 import javax.swing.JOptionPane;
 import Model.CardModel.RumourCard;

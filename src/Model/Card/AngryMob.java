@@ -5,6 +5,7 @@ package Model.Card;
  * L'effet de Witch est de continuer le prochain tour.
  * L'effet de chasse ne peut être utilisé que si l'identité est révélée comme étant celle d'un villageois, 
  * révélant la carte d'identité d'une autre personne et marquant des points en fonction de son identité.
+ * Inherits the super class {@code RumourCard}.
  * @author ZHANG xiao
  * @see RumourCard
  */
