@@ -27,16 +27,15 @@ import View.GamePane;
 
 
 /**
- * Classe de contrôle du jeu.
+ * Game control class..
  * <p>
- * Contrôle la distribution des cartes et le processus de jeu.
+ * Encapsulates the distribution of cards and the playing process.
  * @author SUN Sun 
- * 
+ * @author ZHANG Xiao
  */
 
 /**
  * @see Player
- * @see Pile
  * @see Main
  *
  */
