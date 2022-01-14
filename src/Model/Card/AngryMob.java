@@ -66,7 +66,7 @@ public class AngryMob extends RumourCard {
 			}
 			Object[] options = idList.toArray();
 			int chosenId = (int)JOptionPane.showInputDialog(null, "player", "Broomstick", 1, null, options, options[0]);
-			
+				Player chosenPlayer = game.findPlayer(chosenId);
 				chosenPlayer.revealIdentity();
 				//calculate point
 				if (chosenPlayer.getIdentity() == Identity.Villager) {

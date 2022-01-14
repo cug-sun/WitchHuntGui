@@ -7,7 +7,8 @@ import Model.CardModel.RumourCard;
 
 /**
  * Inherits from {@link Player} and overrides bot's behavior.
- * 
+ * @author SUN Sun
+ * @author ZHANG Xiao
  * @see Player
  */
 public class Bot extends Player {
