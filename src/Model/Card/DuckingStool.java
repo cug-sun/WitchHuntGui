@@ -31,12 +31,20 @@ public class DuckingStool extends RumourCard {
 		// TODO 自动生成的构造函数存根
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 自动生成的构造函数存根
 		return cardName;
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 自动生成的构造函数存根
@@ -66,6 +74,10 @@ public class DuckingStool extends RumourCard {
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -118,6 +130,10 @@ public class DuckingStool extends RumourCard {
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的构造函数存根
@@ -127,6 +143,10 @@ public class DuckingStool extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的构造函数存根

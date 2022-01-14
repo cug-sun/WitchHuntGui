@@ -27,13 +27,20 @@ public class Broomstick extends RumourCard {
 		super();
 		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		return cardName;
 	}
-
+	
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -44,6 +51,10 @@ public class Broomstick extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -54,6 +65,10 @@ public class Broomstick extends RumourCard {
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -62,6 +77,10 @@ public class Broomstick extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�

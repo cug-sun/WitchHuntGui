@@ -28,12 +28,20 @@ public class EvilEye extends RumourCard {
 		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 自动生成的方法存根
 		return cardName;
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -47,6 +55,10 @@ public class EvilEye extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -60,6 +72,10 @@ public class EvilEye extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 自动生成的方法存根
@@ -72,6 +88,10 @@ public class EvilEye extends RumourCard {
 		setIsUsed(true);
 	}
 
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 自动生成的方法存根

@@ -7,10 +7,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 /**
- * Contient toutes les cartes de rumour.
+ * <p>Contient toutes les cartes de rumour.</p>
  * <p>
  * Déterminez si une carte a été utilisée avec l'attribut isUsed.
- * Les effets de Witch et de village sont réécrit dans la classe de chaque carte.
+ * Les effets de Witch et de village sont réécrit dans la classe de chaque carte.</p>
  * @author Sun sun
  * @author ZHANG xiao
  */
@@ -27,12 +27,26 @@ public abstract class RumourCard implements cardAbility {
 	public RumourCard() {
 		this.isUsed = false;
 	}
+	
+	/**
+	 *pour distinguer une carte a été utilisée
+	 *
+	 */
 	public void setIsUsed(boolean isUsed) {
 		this.isUsed = isUsed;
 	}
+	/**
+	 * détecter si une carte a été utilisée
+	 * @return isUsed
+	 */
 	public boolean getIsUsed() {
 		return this.isUsed;
 	}
+	
+	/**
+	 * Remplir la graph de carte
+	 * @return image
+	 */
 	public Image getCardImage() {
 		Image image = null;
 		try {

@@ -79,9 +79,6 @@ public class BlackCat extends RumourCard {
 			game.getDiscardPile().remove(chosenCard);
 			//current player takes next turn
 			game.setCurrentPlayer(player);
-			//discard Black Cat
-//			player.getHand().remove(this);
-//			game.getDiscardPile().add(this);
 			setIsUsed(true);
 			game.getGamePane().repaint();
 		}

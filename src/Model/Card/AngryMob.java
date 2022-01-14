@@ -26,22 +26,21 @@ public class AngryMob extends RumourCard {
 	public static RumourCardName cardName = RumourCardName.Angry_Mob;
 	public AngryMob() {
 		super();
-		// TODO 自动生成的构造函数存根
 	}
 	/**
 	* {@inheritDoc}
+	* 
 	*/
 	@Override
 	public RumourCardName getCardName() {
-		// TODO 自动生成的方法存根
 		return cardName;
 	}
 	/**
 	* {@inheritDoc}
+	* 
 	*/
 	@Override
 	public void witchEffect(Game game) {
-		// TODO 自动生成的方法存根
 		//take next turn
 		System.out.println("You will take next turn");
 		JOptionPane.showMessageDialog(null,"You will play next turn","info",1);
@@ -67,26 +66,7 @@ public class AngryMob extends RumourCard {
 			}
 			Object[] options = idList.toArray();
 			int chosenId = (int)JOptionPane.showInputDialog(null, "player", "Broomstick", 1, null, options, options[0]);
-			//reveal another player's identity
-//			Scanner scanner = new Scanner(System.in);
-//			System.out.println("You can reveal another player's identity\nInput the player's id");
-//			int chosenId = scanner.nextInt();
-			Player chosenPlayer = game.findPlayer(chosenId);
-			//when a player has a revealed Broomstick, he/she can't be chosen by Angry Mob
-//			boolean broomStick = false;
-//			for (RumourCard card : chosenPlayer.getRevealedCards()) {
-//				if(card.getCardName() == RumourCardName.Broomstick) {
-//					broomStick = true;
-//					break;
-//				}	
-//			}
 			
-//			if(broomStick) {
-//				System.out.printf("Player %d has a revealed Broomstick, he/she can't be chosen by Angry Mob!\n",chosenPlayer.getPlayerId());
-//				game.setCurrentPlayer(player);
-//				setIsUsed(false);
-//			}
-//			else {
 				chosenPlayer.revealIdentity();
 				//calculate point
 				if (chosenPlayer.getIdentity() == Identity.Villager) {
@@ -125,7 +105,6 @@ public class AngryMob extends RumourCard {
 	*/
 	@Override
 	public void robotHuntEffect(Game game) {
-		// TODO 自动生成的方法存根
 		Bot player = (Bot) game.getCurrentPlayer();
 		if(player.isRevealed() == true && player.getIdentity() == Identity.Villager) {
 			Player chosenPlayer = null;
