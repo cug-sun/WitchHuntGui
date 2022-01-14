@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * The main frame of the start window.
  * <p>
  * Inherits the super class {@code JFrame}.
- * @author Sun
+ * @author SUN Sun
  *
  */
 public class ConfigFrame extends JFrame {

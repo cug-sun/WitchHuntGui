@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * The component of {@link View.ConfigFrame} to show background image in the start window.
  * <p>
  * Inherits the superclass {@code JPanel}.
- * @author Sun
+ * @author SUN Sun
  *
  */
 public class BackgroundPanel extends JPanel {
@@ -27,14 +27,7 @@ public class BackgroundPanel extends JPanel {
 	   this.im=im;
 	   this.setOpaque(true);
 	}
-	/**
-	 * Reads image file from resource folder. 
-	 * @param fileName image file path
-	 * @throws IOException when the image file not found
-	 */
-	public BackgroundPanel(String fileName) throws IOException {
-	    im = ImageIO.read(new File(fileName));
-	  }
+	
 	
 	/**
 	 * Overrides the method {@code paintComponent()} to draw the background image.

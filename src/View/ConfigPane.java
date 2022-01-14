@@ -11,7 +11,7 @@ import javax.swing.JButton;
  * The main component of {@link View.ConfigFrame}.
  * <p>
  * Inherits the super class {@code JPanel}.
- * @author Sun
+ * @author SUN Sun
  *
  */
 public class ConfigPane extends JPanel {
