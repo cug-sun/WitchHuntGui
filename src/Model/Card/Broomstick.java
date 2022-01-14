@@ -1,6 +1,4 @@
 package Model.Card;
-
-import Model.Bot;
 /**
  * Stratégie de la carte Broomstick.
  * <p>
@@ -10,6 +8,8 @@ import Model.Bot;
  * @author ZHANG xiao
  * @see RumourCard
  */
+import Model.Bot;
+
 
 import javax.swing.JOptionPane;
 import Model.CardModel.RumourCard;

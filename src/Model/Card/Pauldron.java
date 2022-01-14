@@ -1,6 +1,14 @@
 package Model.Card;
 
-
+/**
+ * Stratégie de la carte Pauldron.
+ * <p>
+ * L'effet de Witch est le joueur qui vous accuse se défausse d'une carte et vous passez au tour suivant.
+ * L'effet de village est révéle votre identité
+ * Inherits the super class {@code RumourCard}.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 import Model.Bot;
 
 import javax.swing.JOptionPane;

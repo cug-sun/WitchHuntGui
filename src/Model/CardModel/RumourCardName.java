@@ -1,5 +1,13 @@
 package Model.CardModel;
 
+/**
+ * Cette classe est utilisée pour stocker les noms des cartes.
+ *
+ * @author SUN Sun 
+ * @author ZHANG xiao
+ * 
+ */
+
 public enum RumourCardName {
 	Angry_Mob("Angry Mob"), The_Inquisition("The Inquisition"), Pointed_Hat("Pointed Hat"), Hooked_Nose("Hooked Nose"),Broomstick("Broomstick"), Wart("Wart"),
 	Ducking_Stool("Ducking Stool"), Pauldron("Pauldron"), Evil_Eye("Evil Eye"), Toad("Toad"), Black_Cat("Black Cat"), Pet_Newt("Pet Newt");

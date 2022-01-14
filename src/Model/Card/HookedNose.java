@@ -1,5 +1,14 @@
 package Model.Card;
 
+/**
+ * Stratégie de la carte HookedNose.
+ * <p>
+ * L'effet de Witch est prends une carte du joueur qui vous accuse et continuer pour un autre tour.
+ * L'effet de village est choisie un joueur et recevez une de ses cartes au hasard.
+ * Inherits the super class {@code RumourCard}.
+ * @author ZHANG xiao
+ * @see RumourCard
+ */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,13 +27,19 @@ public class HookedNose extends RumourCard {
 		super();
 		// TODO 鑷姩鐢熸垚鐨勬瀯閫犲嚱鏁板瓨鏍�
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public RumourCardName getCardName() {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
 		return cardName;
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void witchEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -60,7 +75,10 @@ public class HookedNose extends RumourCard {
 	    game.getGamePane().repaint();
 		
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void huntEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -79,7 +97,10 @@ public class HookedNose extends RumourCard {
 		setIsUsed(true);
 		game.getGamePane().repaint();
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotWitchEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
@@ -91,7 +112,10 @@ public class HookedNose extends RumourCard {
 	    game.setCurrentPlayer(player);
 	    setIsUsed(true);
 	}
-
+	/**
+	* {@inheritDoc}
+	* 
+	*/
 	@Override
 	public void robotHuntEffect(Game game) {
 		// TODO 鑷姩鐢熸垚鐨勬柟娉曞瓨鏍�
